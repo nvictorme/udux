@@ -14,9 +14,9 @@ router.get("/", async (req: Request, res: Response) => {
       skip: (parseInt(page as string) - 1) * parseInt(limit as string),
       relations: ["antecedentes"],
     });
-    res.status(200).send({ pacientes });
+    res.status(200).json({ pacientes });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -28,9 +28,9 @@ router.get("/:id", async (req: Request, res: Response) => {
     const paciente = await AppDataSource.getRepository(Paciente).findOneBy({
       id: idPaciente,
     });
-    res.status(200).send({ paciente });
+    res.status(200).json({ paciente });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -39,9 +39,9 @@ router.post("/", async (req: Request, res: Response) => {
   try {
     const paciente = AppDataSource.getRepository(Paciente).create(req.body);
     await AppDataSource.getRepository(Paciente).save(paciente);
-    res.status(201).send({ paciente });
+    res.status(201).json({ paciente });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -56,9 +56,9 @@ router.put("/:id", async (req: Request, res: Response) => {
     if (!paciente) throw new Error("Paciente no encontrado");
     AppDataSource.getRepository(Paciente).merge(paciente, req.body);
     await AppDataSource.getRepository(Paciente).save(paciente);
-    res.status(200).send({ paciente });
+    res.status(200).json({ paciente });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -72,9 +72,9 @@ router.delete("/:id", async (req: Request, res: Response) => {
     });
     if (!paciente) throw new Error("Paciente no encontrado");
     await AppDataSource.getRepository(Paciente).remove(paciente);
-    res.status(204).send();
+    res.status(204).json({});
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 

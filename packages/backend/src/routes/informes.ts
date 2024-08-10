@@ -14,9 +14,9 @@ router.get("/", async (req: Request, res: Response) => {
       skip: (parseInt(page as string) - 1) * parseInt(limit as string),
       relations: ["paciente"],
     });
-    res.status(200).send({ informes });
+    res.status(200).json({ informes });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -28,9 +28,9 @@ router.get("/:id", async (req: Request, res: Response) => {
     const informe = await AppDataSource.getRepository(Informe).findOneBy({
       id: idInforme,
     });
-    res.status(200).send({ informe });
+    res.status(200).json({ informe });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -42,9 +42,9 @@ router.get("/paciente/:id", async (req: Request, res: Response) => {
     const informes = await AppDataSource.getRepository(Informe).find({
       where: { paciente: { id: idPaciente } },
     });
-    res.status(200).send({ informes });
+    res.status(200).json({ informes });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -53,9 +53,9 @@ router.post("/", async (req: Request, res: Response) => {
   try {
     const informe = AppDataSource.getRepository(Informe).create(req.body);
     await AppDataSource.getRepository(Informe).save(informe);
-    res.status(201).send({ informe });
+    res.status(201).json({ informe });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -70,9 +70,9 @@ router.put("/:id", async (req: Request, res: Response) => {
     if (!informe) throw new Error("Informe no encontrado");
     AppDataSource.getRepository(Informe).merge(informe, req.body);
     await AppDataSource.getRepository(Informe).save(informe);
-    res.status(200).send({ informe });
+    res.status(200).json({ informe });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -86,9 +86,9 @@ router.delete("/:id", async (req: Request, res: Response) => {
     });
     if (!informe) throw new Error("Informe no encontrado");
     await AppDataSource.getRepository(Informe).remove(informe);
-    res.status(200).send({ informe });
+    res.status(200).json({});
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 

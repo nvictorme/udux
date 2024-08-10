@@ -14,9 +14,9 @@ router.get("/", async (req: Request, res: Response) => {
       skip: (parseInt(page as string) - 1) * parseInt(limit as string),
       relations: ["paciente"],
     });
-    res.status(200).send({ citas });
+    res.status(200).json({ citas });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -28,9 +28,9 @@ router.get("/:id", async (req: Request, res: Response) => {
     const cita = await AppDataSource.getRepository(Cita).findOneBy({
       id: idCita,
     });
-    res.status(200).send({ cita });
+    res.status(200).json({ cita });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -42,9 +42,9 @@ router.get("/paciente/:id", async (req: Request, res: Response) => {
     const citas = await AppDataSource.getRepository(Cita).find({
       where: { paciente: { id: idPaciente } },
     });
-    res.status(200).send({ citas });
+    res.status(200).json({ citas });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -53,9 +53,9 @@ router.post("/", async (req: Request, res: Response) => {
   try {
     const cita = AppDataSource.getRepository(Cita).create(req.body);
     await AppDataSource.getRepository(Cita).save(cita);
-    res.status(201).send({ cita });
+    res.status(201).json({ cita });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -70,9 +70,9 @@ router.put("/:id", async (req: Request, res: Response) => {
     if (!cita) throw new Error("Cita no encontrada");
     AppDataSource.getRepository(Cita).merge(cita, req.body);
     await AppDataSource.getRepository(Cita).save(cita);
-    res.status(200).send({ cita });
+    res.status(200).json({ cita });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -86,9 +86,9 @@ router.delete("/:id", async (req: Request, res: Response) => {
     });
     if (!cita) throw new Error("Cita no encontrada");
     await AppDataSource.getRepository(Cita).remove(cita);
-    res.status(200).send({ cita });
+    res.status(200).json({});
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 

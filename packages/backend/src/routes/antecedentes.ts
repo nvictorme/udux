@@ -14,9 +14,9 @@ router.get("/paciente/:id", async (req: Request, res: Response) => {
     ).findOne({
       where: { paciente: { id: idPaciente } },
     });
-    res.status(200).send({ antecedentes });
+    res.status(200).json({ antecedentes });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -27,9 +27,9 @@ router.post("/", async (req: Request, res: Response) => {
       req.body
     );
     await AppDataSource.getRepository(Antecedentes).save(antecedentes);
-    res.status(201).send({ antecedentes });
+    res.status(201).json({ antecedentes });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -46,9 +46,9 @@ router.put("/:id", async (req: Request, res: Response) => {
     if (!antecedentes) throw new Error("Antecedentes no encontrados");
     AppDataSource.getRepository(Antecedentes).merge(antecedentes, req.body);
     await AppDataSource.getRepository(Antecedentes).save(antecedentes);
-    res.status(200).send({ antecedentes });
+    res.status(200).json({ antecedentes });
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -64,9 +64,9 @@ router.delete("/:id", async (req: Request, res: Response) => {
     });
     if (!antecedentes) throw new Error("Antecedentes no encontrados");
     await AppDataSource.getRepository(Antecedentes).remove(antecedentes);
-    res.status(200).send({ antecedentes });
+    res.status(200).json({});
   } catch (error: any) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
