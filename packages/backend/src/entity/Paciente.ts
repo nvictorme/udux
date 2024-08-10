@@ -56,12 +56,14 @@ export class Paciente extends Base implements IPaciente {
   @Column({ type: "varchar", length: 100, nullable: true })
   email: string;
 
-  @OneToOne(() => Antecedentes, (antecedentes) => antecedentes.paciente)
+  @OneToOne(() => Antecedentes, (antecedentes) => antecedentes.paciente, {
+    cascade: true,
+  })
   antecedentes: IAntecedentes;
 
-  @OneToMany(() => Cita, (cita) => cita.paciente)
+  @OneToMany(() => Cita, (cita) => cita.paciente, { cascade: true })
   citas: ICita[];
 
-  @OneToMany(() => Informe, (informe) => informe.paciente)
+  @OneToMany(() => Informe, (informe) => informe.paciente, { cascade: true })
   informes: IInforme[];
 }

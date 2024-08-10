@@ -4,6 +4,11 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 
+import PacientesRouter from "./routes/pacientes";
+import CitasRouter from "./routes/citas";
+import AntecedentesRouter from "./routes/antecedentes";
+import InformesRouter from "./routes/informes";
+
 AppDataSource.initialize()
   .then(async () => {
     // Create a new express application instance
@@ -19,7 +24,11 @@ AppDataSource.initialize()
       .use(express.json())
       .use(morgan("combined"));
 
-    // TODO: Define a route handler
+    // Define a route handler
+    app.use("/pacientes", PacientesRouter);
+    app.use("/citas", CitasRouter);
+    app.use("/antecedentes", AntecedentesRouter);
+    app.use("/informes", InformesRouter);
 
     // 404 - catch all
     app.use((req, res) => {
