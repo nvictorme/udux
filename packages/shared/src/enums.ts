@@ -12,7 +12,7 @@ export enum ESTADO_CIVIL {
   VIUDO = "Viudo",
 }
 
-export enum STATUS_CITA {
+export enum ESTATUS_CITA {
   EN_ESPERA = "En espera",
   EN_CONSULTA = "En consulta",
   FINALIZADA = "Finalizada",

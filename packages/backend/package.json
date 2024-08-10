@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "reflect-metadata": "^0.1.14",
+    "shared": "file:../shared",
     "sqlite3": "^5.0.2",
     "typeorm": "0.3.20"
   },

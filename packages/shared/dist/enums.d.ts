@@ -10,7 +10,7 @@ export declare enum ESTADO_CIVIL {
     DIVORCIADO = "Divorciado",
     VIUDO = "Viudo"
 }
-export declare enum STATUS_CITA {
+export declare enum ESTATUS_CITA {
     EN_ESPERA = "En espera",
     EN_CONSULTA = "En consulta",
     FINALIZADA = "Finalizada",
