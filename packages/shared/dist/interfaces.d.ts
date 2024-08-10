@@ -1,8 +1,8 @@
-import { ESTADO_CIVIL, GENERO, STATUS_CITA } from "./enums";
+import { ESTADO_CIVIL, GENERO, ESTATUS_CITA } from "./enums";
 export interface IBase {
     id: number;
-    fechaCreado: string;
-    fechaModificado: string;
+    fechaCreado: Date;
+    fechaModificado: Date;
 }
 export interface IPaciente extends IBase {
     nombre: string;
@@ -16,6 +16,9 @@ export interface IPaciente extends IBase {
     direccion: string;
     telefono: string;
     email: string;
+    antecedentes: IAntecedentes;
+    citas: ICita[];
+    informes: IInforme[];
 }
 export interface IAntecedentes extends IBase {
     paciente: IPaciente;
@@ -28,8 +31,8 @@ export interface IAntecedentes extends IBase {
 }
 export interface ICita extends IBase {
     paciente: IPaciente;
-    fechaCita: string;
-    status: STATUS_CITA;
+    fechaCita: Date;
+    estatus: ESTATUS_CITA;
     motivoConsulta: string;
     procedimiento: string;
     enfermedadActual: string;
@@ -38,4 +41,10 @@ export interface ICita extends IBase {
     tratamiento: string;
     observaciones: string;
     honorarios: number;
+}
+export interface IInforme extends IBase {
+    paciente: IPaciente;
+    fechaInforme: Date;
+    informe: string;
+    observaciones: string;
 }
