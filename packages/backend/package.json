@@ -4,7 +4,12 @@
   "description": "Awesome project developed with TypeORM.",
   "type": "commonjs",
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/helmet": "^4.0.0",
+    "@types/morgan": "^1.9.9",
     "@types/node": "^16.11.10",
+    "concurrently": "^8.2.2",
     "ts-node": "10.9.1",
     "typescript": "4.5.2"
   },
@@ -14,7 +19,14 @@
     "typeorm": "0.3.20"
   },
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "build": "tsc",
+    "build:dev": "tsc --watch",
+    "serve:dev": "node --env-file=.env --watch dist/index.js",
+    "dev": "concurrently \"npm run build:dev\" \"npm run serve:dev\"",
+    "serve": "node --env-file=.env dist/index.js",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:generate": "npm run typeorm -- migration:generate -d src/data-source.ts",
+    "migration:run": "npm run typeorm -- migration:run -d src/data-source.ts",
+    "migration:revert": "npm run typeorm -- migration:revert -d src/data-source.ts"
   }
 }
