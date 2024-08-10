@@ -37,7 +37,12 @@ export const columns: ColumnDef<Paciente>[] = [
   },
   {
     accessorKey: "fechaNacimiento",
-    header: "Fecha de nacimiento",
+    header: "Edad",
+    accessorFn: (paciente) => {
+      const fechaNacimiento = new Date(paciente.fechaNacimiento);
+      const edad = new Date().getFullYear() - fechaNacimiento.getFullYear();
+      return edad;
+    },
   },
   {
     accessorKey: "estadoCivil",
