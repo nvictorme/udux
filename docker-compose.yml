@@ -1,0 +1,32 @@
+volumes:
+  pg_data:
+
+services:
+  pg:
+    image: postgres:14-alpine
+    command:
+      - -c
+      - wal_level=logical
+    ports:
+      - 5432:5432
+    restart: always
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  electric:
+    image: electricsql/electric
+    depends_on:
+      - pg
+    environment:
+      DATABASE_REQUIRE_SSL: false
+      ELECTRIC_WRITE_TO_PG_MODE: direct_writes
+      PG_PROXY_PASSWORD: proxy_password
+      AUTH_MODE: insecure
+    ports:
+      - 5133:5133
+      - 65432:65432
+    restart: always
+
+  react-app:
+    depends_on:
+      - electric
