@@ -7,6 +7,8 @@ import {
 } from "@/components/ui/dialog";
 import { FormularioCita } from "./FormularioCita";
 import { ICita, IPaciente } from "shared/src/interfaces";
+import { useCallback } from "react";
+import { Button } from "@/components/ui/button";
 
 interface DialogoCitaProps {
   accion: "Crear" | "Actualizar";
@@ -23,8 +25,17 @@ export function DialogoCita({
   open,
   onOpenChange,
 }: DialogoCitaProps) {
+  const handleOpenChange = useCallback(
+    (isOpen: boolean) => {
+      // Prevent closing the dialog when clicking the overlay (backdrop)
+      if (!isOpen) {
+        onOpenChange(true);
+      }
+    },
+    [onOpenChange]
+  );
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-lg">
         <DialogHeader>
           <DialogTitle>{accion} Cita</DialogTitle>
