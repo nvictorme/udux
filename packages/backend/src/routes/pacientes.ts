@@ -9,13 +9,20 @@ router.get("/", async (req: Request, res: Response) => {
   try {
     // listar pacientes con paginacion
     const { page = "1", limit = "10" } = req.query;
-    const pacientes = await AppDataSource.getRepository(Paciente).find({
+    const [pacientes, total] = await AppDataSource.getRepository(
+      Paciente
+    ).findAndCount({
       take: parseInt(limit as string),
       skip: (parseInt(page as string) - 1) * parseInt(limit as string),
       relations: ["antecedentes"],
       order: { id: "DESC" },
     });
-    res.status(200).json({ pacientes });
+    res.status(200).json({
+      pacientes,
+      total,
+      page: parseInt(page as string),
+      pageCount: Math.ceil(total / parseInt(limit as string) || 1),
+    });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

@@ -6,8 +6,10 @@ import { DialogoPaciente } from "./DialogoPaciente";
 import { Button } from "@/components/ui/button";
 
 export function TablaPacientes() {
-  const { pacientes, listarPacientes } = usePacientesStore();
+  const { pacientes, listarPacientes, page, pageCount, setPage } =
+    usePacientesStore();
   const [open, setOpen] = useState(false);
+
   useEffect(() => {
     listarPacientes();
   }, [listarPacientes]);
@@ -26,7 +28,13 @@ export function TablaPacientes() {
         </Button>
         <DialogoPaciente accion="Crear" open={open} onOpenChange={setOpen} />
       </div>
-      <DataTabTable columns={columns} data={pacientes as Paciente[]} />
+      <DataTabTable
+        columns={columns}
+        data={pacientes as Paciente[]}
+        page={page}
+        pageCount={pageCount}
+        setPage={setPage}
+      />
     </div>
   );
 }
