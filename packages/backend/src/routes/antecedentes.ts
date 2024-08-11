@@ -64,7 +64,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
     });
     if (!antecedentes) throw new Error("Antecedentes no encontrados");
     await AppDataSource.getRepository(Antecedentes).remove(antecedentes);
-    res.status(200).json({});
+    res.status(204).json({});
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

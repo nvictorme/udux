@@ -86,7 +86,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
     });
     if (!informe) throw new Error("Informe no encontrado");
     await AppDataSource.getRepository(Informe).remove(informe);
-    res.status(200).json({});
+    res.status(204).json({});
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
