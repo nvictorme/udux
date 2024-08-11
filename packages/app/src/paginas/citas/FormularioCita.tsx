@@ -170,8 +170,11 @@ export function FormularioCita({
             )}
           />
         </div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Button type="submit">Guardar Paciente</Button>
+        <div className="self-center m-auto">
+          <Button type="button" variant="link" onClick={onClose}>
+            Cancelar
+          </Button>
+          <Button type="submit">{accion} Cita</Button>
         </div>
       </div>
     </form>

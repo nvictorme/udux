@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dialog";
 import { FormularioPaciente } from "./FormularioPaciente";
 import { IPaciente } from "shared/src/interfaces";
+import { useCallback } from "react";
 
 interface DialogoPacienteProps {
   accion: "Crear" | "Actualizar";
@@ -21,8 +22,17 @@ export function DialogoPaciente({
   open,
   onOpenChange,
 }: DialogoPacienteProps) {
+  const handleOpenChange = useCallback(
+    (isOpen: boolean) => {
+      // Prevent closing the dialog when clicking the overlay (backdrop)
+      if (!isOpen) {
+        onOpenChange(true);
+      }
+    },
+    [onOpenChange]
+  );
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-lg">
         <DialogHeader>
           <DialogTitle>{accion} Paciente</DialogTitle>
