@@ -4,6 +4,7 @@ import {
   getCoreRowModel,
   useReactTable,
   getFilteredRowModel,
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -15,25 +16,35 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  page: number;
+  pageCount: number;
+  setPage: (page: number) => void;
 }
 
 export function DataTabTable<TData, TValue>({
   columns,
   data,
+  pageCount,
+  page,
+  setPage,
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = useState("");
 
   const table = useReactTable({
     data,
     columns,
+    pageCount,
+    rowCount: data.length,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn: "includesString",
     state: {
@@ -103,6 +114,30 @@ export function DataTabTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
+      </div>
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            table.previousPage();
+            setPage(page - 1);
+          }}
+          disabled={page === 1}
+        >
+          Anterior
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            table.nextPage();
+            setPage(page + 1);
+          }}
+          disabled={page === pageCount}
+        >
+          Siguiente
+        </Button>
       </div>
     </div>
   );

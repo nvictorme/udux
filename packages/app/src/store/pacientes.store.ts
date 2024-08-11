@@ -7,10 +7,16 @@ const API_BASE_URL = "http://localhost:3000";
 // Define the shape of our store.
 export type PacientesStore = {
   pacientes: IPaciente[];
+  total: number;
+  page: number;
+  limit: number;
+  pageCount: number;
   listarPacientes: () => void;
   crearPaciente: (paciente: IPaciente) => void;
   actualizarPaciente: (paciente: IPaciente) => void;
   eliminarPaciente: (paciente: IPaciente) => void;
+  setPage: (page: number) => void;
+  setLimit: (limit: number) => void;
 };
 
 // Create a store with an initial state.
@@ -18,10 +24,16 @@ export const usePacientesStore = create<PacientesStore>()(
   persist(
     (set, get): PacientesStore => ({
       pacientes: [],
+      total: 0,
+      page: 1,
+      limit: 10,
+      pageCount: 1,
       listarPacientes: async () => {
-        const response = await fetch(`${API_BASE_URL}/pacientes`);
+        const response = await fetch(
+          `${API_BASE_URL}/pacientes?page=${get().page}&limit=${get().limit}`
+        );
         const data = await response.json();
-        set({ pacientes: data.pacientes });
+        set({ ...data });
       },
       crearPaciente: async (paciente) => {
         const response = await fetch(`${API_BASE_URL}/pacientes`, {
@@ -62,6 +74,14 @@ export const usePacientesStore = create<PacientesStore>()(
           const pacientes = get().pacientes.filter((p) => p.id !== paciente.id);
           set({ pacientes });
         }
+      },
+      setPage: (page) => {
+        set({ page });
+        get().listarPacientes();
+      },
+      setLimit: (limit) => {
+        set({ limit });
+        get().listarPacientes();
       },
     }),
     {

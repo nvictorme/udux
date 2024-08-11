@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useCitasStore } from "@/store/citas.store";
 
 export function TablaCitas() {
-  const { citas, listarCitas } = useCitasStore();
+  const { citas, listarCitas, page, pageCount, setPage } = useCitasStore();
 
   useEffect(() => {
     listarCitas();
@@ -13,7 +13,13 @@ export function TablaCitas() {
   return (
     <>
       <div>
-        <DataTabTable columns={columns} data={citas as Cita[]} />
+        <DataTabTable
+          columns={columns}
+          data={citas as Cita[]}
+          page={page}
+          pageCount={pageCount}
+          setPage={setPage}
+        />
       </div>
     </>
   );

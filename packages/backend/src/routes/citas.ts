@@ -10,16 +10,23 @@ router.get("/", async (req: Request, res: Response) => {
     // listar citas con paginacion
     const { page = "1", limit = "10" } = req.query;
     const today = new Date().toISOString().split("T")[0];
-    const citas = await AppDataSource.getRepository(Cita).find({
-      where: {
-        fechaCita: today,
-      },
-      take: parseInt(limit as string),
-      skip: (parseInt(page as string) - 1) * parseInt(limit as string),
-      relations: ["paciente"],
-      order: { id: "ASC" },
+    const [citas, total] = await AppDataSource.getRepository(Cita).findAndCount(
+      {
+        where: {
+          fechaCita: today,
+        },
+        take: parseInt(limit as string),
+        skip: (parseInt(page as string) - 1) * parseInt(limit as string),
+        relations: ["paciente"],
+        order: { id: "ASC" },
+      }
+    );
+    res.status(200).json({
+      citas,
+      total,
+      page: parseInt(page as string),
+      pageCount: Math.ceil(total / parseInt(limit as string) || 1),
     });
-    res.status(200).json({ citas });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
