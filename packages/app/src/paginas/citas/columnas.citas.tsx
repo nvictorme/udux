@@ -1,4 +1,15 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useCitasStore } from "@/store/citas.store";
 import { ColumnDef } from "@tanstack/react-table";
+import { useEffect, useState } from "react";
+import { ESTATUS_CITA } from "shared/src/enums";
 import { ICita } from "shared/src/interfaces";
 
 // This type is used to define the shape of our data.
@@ -34,5 +45,30 @@ export const columns: ColumnDef<Cita>[] = [
   {
     accessorKey: "estatus",
     header: "Estatus",
+    cell: ({ row }) => {
+      const cita = row.original as ICita;
+      const estatus = cita.estatus as ESTATUS_CITA;
+      const { actualizarCita } = useCitasStore();
+      return (
+        <Select
+          defaultValue={estatus}
+          onValueChange={(value) => {
+            cita.estatus = value as ESTATUS_CITA;
+            actualizarCita(cita);
+          }}
+        >
+          <SelectTrigger>
+            <SelectValue>{estatus}</SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {Object.values(ESTATUS_CITA).map((ec) => (
+              <SelectItem key={ec} value={ec}>
+                {ec}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      );
+    },
   },
 ];
