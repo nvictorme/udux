@@ -39,7 +39,7 @@ export function ThemeProvider({
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
-        ? "dark"
+        ? "light" // forced light theme, change to "dark" for dark theme
         : "light";
 
       root.classList.add(systemTheme);
