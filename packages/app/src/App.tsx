@@ -1,10 +1,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TablaPacientes } from "./pacientes/TablaPacientes";
+import { TablaPacientes } from "./paginas/pacientes/TablaPacientes";
 import "./App.css";
+import { TablaCitas } from "./paginas/citas/TablaCitas";
 
 function App() {
   return (
-    <Tabs defaultValue="account">
+    <Tabs defaultValue="pacientes">
       <TabsList>
         <TabsTrigger value="pacientes">Pacientes</TabsTrigger>
         <TabsTrigger value="citas">Citas</TabsTrigger>
@@ -12,7 +13,9 @@ function App() {
       <TabsContent value="pacientes">
         <TablaPacientes />
       </TabsContent>
-      <TabsContent value="citas">Change your password here.</TabsContent>
+      <TabsContent value="citas">
+        <TablaCitas />
+      </TabsContent>
     </Tabs>
   );
 }
