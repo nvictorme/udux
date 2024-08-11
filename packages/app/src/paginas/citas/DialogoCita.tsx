@@ -8,11 +8,10 @@ import {
 import { FormularioCita } from "./FormularioCita";
 import { ICita, IPaciente } from "shared/src/interfaces";
 import { useCallback } from "react";
-import { Button } from "@/components/ui/button";
 
 interface DialogoCitaProps {
   accion: "Crear" | "Actualizar";
-  cita: ICita;
+  cita?: ICita;
   paciente: IPaciente;
   open: boolean;
   onOpenChange: (open: boolean) => void;
