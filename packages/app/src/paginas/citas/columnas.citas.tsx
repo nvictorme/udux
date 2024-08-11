@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -8,9 +9,10 @@ import {
 } from "@/components/ui/select";
 import { useCitasStore } from "@/store/citas.store";
 import { ColumnDef } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ESTATUS_CITA } from "shared/src/enums";
 import { ICita } from "shared/src/interfaces";
+import { DialogoCita } from "./DialogoCita";
 
 // This type is used to define the shape of our data.
 export type Cita = Omit<
@@ -82,6 +84,28 @@ export const columns: ColumnDef<Cita>[] = [
             ))}
           </SelectContent>
         </Select>
+      );
+    },
+  },
+  {
+    id: "acciones",
+    header: "Acciones",
+    cell: ({ row }) => {
+      const cita = row.original as ICita;
+      const [open, setOpen] = useState(false);
+      return (
+        <>
+          <Button variant="secondary" onClick={() => setOpen(true)}>
+            Actualizar
+          </Button>
+          <DialogoCita
+            accion="Actualizar"
+            cita={cita}
+            paciente={cita.paciente}
+            open={open}
+            onOpenChange={setOpen}
+          />
+        </>
       );
     },
   },

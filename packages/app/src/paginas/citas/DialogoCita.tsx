@@ -6,10 +6,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { FormularioCita } from "./FormularioCita";
-import { IPaciente } from "shared/src/interfaces";
+import { ICita, IPaciente } from "shared/src/interfaces";
 
 interface DialogoCitaProps {
   accion: "Crear" | "Actualizar";
+  cita: ICita;
   paciente: IPaciente;
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -17,6 +18,7 @@ interface DialogoCitaProps {
 
 export function DialogoCita({
   accion,
+  cita,
   paciente,
   open,
   onOpenChange,
@@ -32,6 +34,7 @@ export function DialogoCita({
         </DialogHeader>
         <FormularioCita
           accion={accion}
+          cita={cita}
           paciente={paciente}
           onClose={() => onOpenChange(false)}
         />
