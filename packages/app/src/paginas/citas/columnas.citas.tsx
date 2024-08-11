@@ -66,7 +66,7 @@ export const columns: ColumnDef<Cita>[] = [
                 estatus === ESTATUS_CITA.EN_ESPERA
                   ? "yellow"
                   : estatus === ESTATUS_CITA.EN_CONSULTA
-                  ? "pink"
+                  ? "cyan"
                   : estatus === ESTATUS_CITA.CANCELADA
                   ? "lightgray"
                   : estatus === ESTATUS_CITA.PAGADA
@@ -92,11 +92,23 @@ export const columns: ColumnDef<Cita>[] = [
     header: "Acciones",
     cell: ({ row }) => {
       const cita = row.original as ICita;
+      const { eliminarCita } = useCitasStore();
       const [open, setOpen] = useState(false);
       return (
         <>
-          <Button variant="secondary" onClick={() => setOpen(true)}>
+          <Button
+            variant="outline"
+            className="border-blue-700 text-blue-700"
+            onClick={() => setOpen(true)}
+          >
             Actualizar
+          </Button>
+          <Button
+            variant="link"
+            className="text-red-400"
+            onClick={() => eliminarCita(cita)}
+          >
+            Eliminar
           </Button>
           <DialogoCita
             accion="Actualizar"
