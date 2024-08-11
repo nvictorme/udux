@@ -6,7 +6,7 @@ import { IInforme } from "shared/dist/interfaces";
 @Entity("informes")
 export class Informe extends Base implements IInforme {
   @Column({ type: "date", nullable: false, default: () => "CURRENT_DATE" })
-  fechaInforme: Date;
+  fechaInforme: string;
 
   @Column({ type: "text", nullable: false })
   informe: string;

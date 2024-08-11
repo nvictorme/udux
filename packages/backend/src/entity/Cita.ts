@@ -7,7 +7,7 @@ import { ESTATUS_CITA } from "shared/dist/enums";
 @Entity("citas")
 export class Cita extends Base implements ICita {
   @Column({ type: "date", nullable: false, default: () => "CURRENT_DATE" })
-  fechaCita: Date;
+  fechaCita: string;
 
   @Column({ type: "text", length: 200, nullable: false })
   motivoConsulta: string;

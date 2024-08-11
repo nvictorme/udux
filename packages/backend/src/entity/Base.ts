@@ -10,8 +10,8 @@ export abstract class Base implements IBase {
   id: number;
 
   @CreateDateColumn()
-  fechaCreado: Date;
+  fechaCreado: string;
 
   @UpdateDateColumn()
-  fechaModificado: Date;
+  fechaModificado: string;
 }

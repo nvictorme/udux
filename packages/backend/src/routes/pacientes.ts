@@ -13,6 +13,7 @@ router.get("/", async (req: Request, res: Response) => {
       take: parseInt(limit as string),
       skip: (parseInt(page as string) - 1) * parseInt(limit as string),
       relations: ["antecedentes"],
+      order: { id: "DESC" },
     });
     res.status(200).json({ pacientes });
   } catch (error: any) {

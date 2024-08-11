@@ -13,6 +13,7 @@ import { useState } from "react";
 import { ESTATUS_CITA } from "shared/src/enums";
 import { ICita } from "shared/src/interfaces";
 import { DialogoCita } from "./DialogoCita";
+import { formatDate } from "shared/src/helpers";
 
 // This type is used to define the shape of our data.
 export type Cita = Omit<
@@ -33,7 +34,7 @@ export const columns: ColumnDef<Cita>[] = [
   {
     accessorKey: "fechaCita",
     header: "Fecha Cita",
-    accessorFn: (cita) => new Date(cita.fechaCita).toLocaleDateString(),
+    accessorFn: (cita) => formatDate(cita.fechaCita),
   },
   {
     accessorKey: "paciente",

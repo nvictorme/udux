@@ -32,7 +32,7 @@ export const usePacientesStore = create<PacientesStore>()(
           body: JSON.stringify(paciente),
         });
         const data = await response.json();
-        set({ pacientes: [...get().pacientes, data.paciente] });
+        set({ pacientes: [data.paciente, ...get().pacientes] });
       },
       actualizarPaciente: async (paciente) => {
         const response = await fetch(
