@@ -20,8 +20,8 @@ export const useCitasStore = create<CitasStore>()(
       citas: [],
       listarCitas: async () => {
         const response = await fetch(`${API_BASE_URL}/citas`);
-        const citas = await response.json();
-        set({ citas });
+        const data = await response.json();
+        set({ citas: data.citas });
       },
       crearCita: async (cita) => {
         const response = await fetch(`${API_BASE_URL}/citas`, {
