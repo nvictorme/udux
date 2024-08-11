@@ -15,11 +15,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { usePacientesStore } from "@/store/pacientes.store";
 
 interface FormularioPacienteProps {
-  accion?: "Crear" | "Actualizar";
+  accion: "Crear" | "Actualizar";
+  paciente?: IPaciente;
+  onClose?: () => void;
 }
 
 export function FormularioPaciente({
-  accion = "Crear",
+  accion,
+  paciente,
+  onClose,
 }: FormularioPacienteProps) {
   const { crearPaciente, actualizarPaciente } = usePacientesStore();
   const {
@@ -28,13 +32,16 @@ export function FormularioPaciente({
     watch,
     control,
     formState: { errors },
-  } = useForm<IPaciente>();
+  } = useForm<IPaciente>({
+    ...(paciente && { defaultValues: paciente }),
+  });
   const onSubmit: SubmitHandler<IPaciente> = (data) => {
     if (accion === "Crear") {
       crearPaciente(data);
     } else {
       actualizarPaciente(data);
     }
+    if (onClose) onClose();
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -74,6 +81,7 @@ export function FormularioPaciente({
                 onValueChange={(value) => {
                   field.onChange(value);
                 }}
+                defaultValue={field.value}
               >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="-" />
@@ -122,6 +130,7 @@ export function FormularioPaciente({
                 onValueChange={(value) => {
                   field.onChange(value);
                 }}
+                defaultValue={field.value}
               >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="-" />

@@ -1,24 +1,28 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { FormularioPaciente } from "./FormularioPaciente";
+import { IPaciente } from "shared/src/interfaces";
 
 interface DialogoPacienteProps {
-  accion?: "Crear" | "Actualizar";
+  accion: "Crear" | "Actualizar";
+  paciente?: IPaciente;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-export function DialogoPaciente({ accion = "Crear" }: DialogoPacienteProps) {
+export function DialogoPaciente({
+  accion,
+  paciente,
+  open,
+  onOpenChange,
+}: DialogoPacienteProps) {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">{accion} Paciente</Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-lg">
         <DialogHeader>
           <DialogTitle>{accion} Paciente</DialogTitle>
@@ -26,7 +30,11 @@ export function DialogoPaciente({ accion = "Crear" }: DialogoPacienteProps) {
             Complete el formulario para {accion.toLowerCase()} el paciente.
           </DialogDescription>
         </DialogHeader>
-        <FormularioPaciente accion={accion} />
+        <FormularioPaciente
+          accion={accion}
+          paciente={paciente}
+          onClose={() => onOpenChange(false)}
+        />
       </DialogContent>
     </Dialog>
   );

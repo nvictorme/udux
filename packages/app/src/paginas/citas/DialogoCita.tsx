@@ -1,24 +1,28 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { FormularioCita } from "./FormularioCita";
+import { IPaciente } from "shared/src/interfaces";
 
 interface DialogoCitaProps {
-  accion?: "Crear" | "Actualizar";
+  accion: "Crear" | "Actualizar";
+  paciente: IPaciente;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-export function DialogoCita({ accion = "Crear" }: DialogoCitaProps) {
+export function DialogoCita({
+  accion,
+  paciente,
+  open,
+  onOpenChange,
+}: DialogoCitaProps) {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">{accion} Cita</Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-lg">
         <DialogHeader>
           <DialogTitle>{accion} Cita</DialogTitle>
@@ -26,7 +30,11 @@ export function DialogoCita({ accion = "Crear" }: DialogoCitaProps) {
             Complete el formulario para {accion.toLowerCase()} la cita.
           </DialogDescription>
         </DialogHeader>
-        <FormularioCita accion={accion} />
+        <FormularioCita
+          accion={accion}
+          paciente={paciente}
+          onClose={() => onOpenChange(false)}
+        />
       </DialogContent>
     </Dialog>
   );
