@@ -86,7 +86,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
     });
     if (!cita) throw new Error("Cita no encontrada");
     await AppDataSource.getRepository(Cita).remove(cita);
-    res.status(200).json({});
+    res.status(204).json({});
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
