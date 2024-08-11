@@ -5,6 +5,7 @@ import { useCallback, useEffect } from "react";
 import { IPaciente } from "shared/src/interfaces";
 import { Button } from "@/components/ui/button";
 import { ESTADO_CIVIL, GENERO } from "shared/src/enums";
+import { DialogoPaciente } from "./DialogoPaciente";
 
 export function TablaPacientes() {
   const { pacientes, listarPacientes, crearPaciente, eliminarPaciente } =
@@ -30,25 +31,7 @@ export function TablaPacientes() {
           display: "flex",
         }}
       >
-        <Button
-          onClick={() =>
-            insertPaciente({
-              nombre: "Victor",
-              apellido: "Hugo",
-              genero: GENERO.MASCULINO,
-              cedula: "V-17066986",
-              fechaNacimiento: "1984-05-11",
-              estadoCivil: ESTADO_CIVIL.CASADO,
-              profesion: "Ingeniero",
-              procedencia: "Naguanagua",
-              direccion: "",
-              telefono: "",
-              email: "nvictor@pm.me",
-            })
-          }
-        >
-          insertar paciente
-        </Button>
+        <DialogoPaciente />
       </div>
       <DataTabTable columns={columns} data={pacientes as Paciente[]} />
     </div>
