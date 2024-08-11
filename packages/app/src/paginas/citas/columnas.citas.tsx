@@ -57,7 +57,21 @@ export const columns: ColumnDef<Cita>[] = [
             actualizarCita(cita);
           }}
         >
-          <SelectTrigger>
+          <SelectTrigger
+            className="w-32"
+            style={{
+              backgroundColor:
+                estatus === ESTATUS_CITA.EN_ESPERA
+                  ? "yellow"
+                  : estatus === ESTATUS_CITA.EN_CONSULTA
+                  ? "pink"
+                  : estatus === ESTATUS_CITA.CANCELADA
+                  ? "lightgray"
+                  : estatus === ESTATUS_CITA.PAGADA
+                  ? "lightgreen"
+                  : "white",
+            }}
+          >
             <SelectValue>{estatus}</SelectValue>
           </SelectTrigger>
           <SelectContent>
