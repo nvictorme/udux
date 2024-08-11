@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { ICita } from "shared/src/interfaces";
+import { ICita, IPaciente } from "shared/src/interfaces";
 import {
   Select,
   SelectContent,
@@ -14,11 +14,19 @@ import { ESTATUS_CITA } from "shared/src/enums";
 import { Textarea } from "@/components/ui/textarea";
 import { useCitasStore } from "@/store/citas.store";
 
-interface FormularioPacienteProps {
-  accion?: "Crear" | "Actualizar";
+interface FormularioCitaProps {
+  accion: "Crear" | "Actualizar";
+  paciente: IPaciente;
+  cita?: ICita;
+  onClose?: () => void;
 }
 
-export function FormularioCita({ accion = "Crear" }: FormularioPacienteProps) {
+export function FormularioCita({
+  accion,
+  paciente,
+  cita,
+  onClose,
+}: FormularioCitaProps) {
   const { crearCita, actualizarCita } = useCitasStore();
   const {
     register,
@@ -26,14 +34,18 @@ export function FormularioCita({ accion = "Crear" }: FormularioPacienteProps) {
     watch,
     control,
     formState: { errors },
-  } = useForm<ICita>();
+  } = useForm<ICita>({
+    ...(cita && { defaultValues: cita }),
+  });
   const onSubmit: SubmitHandler<ICita> = (data) => {
     if (accion === "Crear") {
-      crearCita(data);
+      crearCita({ ...data, paciente });
     } else {
       actualizarCita(data);
     }
+    if (onClose) onClose();
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="grid gap-4 py-4">

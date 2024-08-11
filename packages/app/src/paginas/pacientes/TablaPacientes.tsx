@@ -1,12 +1,13 @@
 import { DataTabTable } from "@/components/DataTable";
 import { columns, Paciente } from "./columnas.pacientes";
 import { usePacientesStore } from "@/store/pacientes.store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DialogoPaciente } from "./DialogoPaciente";
+import { Button } from "@/components/ui/button";
 
 export function TablaPacientes() {
-  const { pacientes, listarPacientes, eliminarPaciente } = usePacientesStore();
-
+  const { pacientes, listarPacientes } = usePacientesStore();
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     listarPacientes();
   }, [listarPacientes]);
@@ -20,7 +21,10 @@ export function TablaPacientes() {
           display: "flex",
         }}
       >
-        <DialogoPaciente />
+        <Button variant="default" onClick={() => setOpen(true)}>
+          + Paciente
+        </Button>
+        <DialogoPaciente accion="Crear" open={open} onOpenChange={setOpen} />
       </div>
       <DataTabTable columns={columns} data={pacientes as Paciente[]} />
     </div>
