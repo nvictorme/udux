@@ -12,16 +12,10 @@ export class Antecedentes extends Base implements IAntecedentes {
   quirurgicos: string;
 
   @Column({ type: "text", nullable: true })
-  familiares: string;
+  habitos: string;
 
   @Column({ type: "text", nullable: true })
   actividadFisica: string;
-
-  @Column({ type: "text", nullable: true })
-  alergias: string;
-
-  @Column({ type: "text", nullable: true })
-  medicamentos: string;
 
   @OneToOne(() => Paciente, (paciente: Paciente) => paciente.antecedentes)
   @JoinColumn()

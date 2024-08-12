@@ -14,11 +14,9 @@ export type PacientesStore = {
   pageCount: number;
   listarPacientes: ({
     nombre,
-    apellido,
     cedula,
   }: {
     nombre?: string;
-    apellido?: string;
     cedula?: string;
   }) => void;
   fetchPaciente: (id: number) => void;
@@ -48,10 +46,9 @@ export const usePacientesStore = create<PacientesStore>()(
   persist(
     (set, get): PacientesStore => ({
       ...initialState,
-      listarPacientes: async ({ nombre, apellido, cedula }) => {
+      listarPacientes: async ({ nombre, cedula }) => {
         let query = `?page=${get().page}&limit=${get().limit}`;
         if (nombre) query += `&nombre=${nombre}`;
-        if (apellido) query += `&apellido=${apellido}`;
         if (cedula) query += `&cedula=${cedula}`;
         const response = await fetch(`${API_BASE_URL}/pacientes${query}`);
         const data = await response.json();

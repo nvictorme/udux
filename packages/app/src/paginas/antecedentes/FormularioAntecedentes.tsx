@@ -61,14 +61,14 @@ export function FormularioAntecedentes({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="familiares" className="text-right">
-            Familiares
+          <Label htmlFor="habitos" className="text-right">
+            Hábitos
           </Label>
           <Textarea
-            id="familiares"
+            id="habitos"
             className="col-span-3 text-xl"
-            defaultValue={antecedentes?.familiares}
-            {...register("familiares", { required: false })}
+            defaultValue={antecedentes?.habitos}
+            {...register("habitos", { required: false })}
           />
         </div>
 
@@ -81,30 +81,6 @@ export function FormularioAntecedentes({
             className="col-span-3 text-xl"
             defaultValue={antecedentes?.actividadFisica}
             {...register("actividadFisica", { required: false })}
-          />
-        </div>
-
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="alergias" className="text-right">
-            Alergias
-          </Label>
-          <Textarea
-            id="alergias"
-            className="col-span-3 text-xl"
-            defaultValue={antecedentes?.alergias}
-            {...register("alergias", { required: false })}
-          />
-        </div>
-
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="medicamentos" className="text-right">
-            Medicamentos
-          </Label>
-          <Textarea
-            id="medicamentos"
-            className="col-span-3 text-xl"
-            defaultValue={antecedentes?.medicamentos}
-            {...register("medicamentos", { required: false })}
           />
         </div>
 

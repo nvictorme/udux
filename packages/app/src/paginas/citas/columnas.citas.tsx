@@ -38,7 +38,7 @@ export const columns: ColumnDef<Cita>[] = [
   {
     accessorKey: "paciente",
     header: "Paciente",
-    accessorFn: (cita) => `${cita.paciente?.nombre} ${cita.paciente?.apellido}`,
+    accessorFn: (cita) => `${cita.paciente?.nombre}`,
   },
   {
     accessorKey: "motivoConsulta",

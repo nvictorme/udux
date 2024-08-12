@@ -6,7 +6,6 @@ export interface IBase {
 }
 export interface IPaciente extends IBase {
     nombre: string;
-    apellido: string;
     genero: GENERO;
     cedula: string;
     fechaNacimiento: string;
@@ -24,10 +23,8 @@ export interface IAntecedentes extends IBase {
     paciente: IPaciente;
     medicos: string;
     quirurgicos: string;
-    familiares: string;
+    habitos: string;
     actividadFisica: string;
-    alergias: string;
-    medicamentos: string;
 }
 export interface ICita extends IBase {
     paciente: IPaciente;

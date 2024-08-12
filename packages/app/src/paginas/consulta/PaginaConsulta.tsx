@@ -80,11 +80,6 @@ export function PaginaConsulta() {
                 <span>{paciente.nombre}</span>
               </p>
               <p>
-                <span className="font-light text-sm">Apellido:</span>
-                <br />
-                {paciente.apellido}
-              </p>
-              <p>
                 <span className="font-light text-sm">Cédula:</span>
                 <br />
                 {paciente.cedula}
@@ -157,7 +152,7 @@ export function PaginaConsulta() {
                 <p>
                   <span className="font-light text-sm">Familiares:</span>
                   <br />
-                  <i>{antecedente.familiares}</i>
+                  <i>{antecedente.habitos}</i>
                 </p>
               </div>
               <div className="col-span-2 flex flex-col gap-2">
@@ -165,20 +160,6 @@ export function PaginaConsulta() {
                   <span className="font-light text-sm">Actividad física:</span>
                   <br />
                   <i>{antecedente.actividadFisica}</i>
-                </p>
-              </div>
-              <div className="col-span-2 flex flex-col gap-2">
-                <p>
-                  <span className="font-light text-sm">Alergias:</span>
-                  <br />
-                  <i>{antecedente.alergias}</i>
-                </p>
-              </div>
-              <div className="col-span-2 flex flex-col gap-2">
-                <p>
-                  <span className="font-light text-sm">Medicamentos:</span>
-                  <br />
-                  <i>{antecedente.medicamentos}</i>
                 </p>
               </div>
             </div>
