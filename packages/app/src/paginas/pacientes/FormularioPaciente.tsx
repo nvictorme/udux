@@ -27,13 +27,7 @@ export function FormularioPaciente({
   onClose,
 }: FormularioPacienteProps) {
   const { crearPaciente, actualizarPaciente } = usePacientesStore();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    control,
-    formState: { errors },
-  } = useForm<IPaciente>({
+  const { register, handleSubmit, control } = useForm<IPaciente>({
     ...(paciente && { defaultValues: paciente }),
   });
   const onSubmit: SubmitHandler<IPaciente> = (data) => {
