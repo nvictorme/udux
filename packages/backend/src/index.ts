@@ -4,10 +4,10 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 
-import PacientesRouter from "./routes/pacientes";
-import CitasRouter from "./routes/citas";
-import AntecedentesRouter from "./routes/antecedentes";
-import InformesRouter from "./routes/informes";
+import PacientesRoutes from "./routes/pacientes.routes";
+import CitasRoutes from "./routes/citas.routes";
+import AntecedentesRoutes from "./routes/antecedentes.routes";
+import InformesRoutes from "./routes/informes.routes";
 
 AppDataSource.initialize()
   .then(async () => {
@@ -23,10 +23,10 @@ AppDataSource.initialize()
       .use(morgan("combined"));
 
     // Define a route handler
-    app.use("/pacientes", PacientesRouter);
-    app.use("/citas", CitasRouter);
-    app.use("/antecedentes", AntecedentesRouter);
-    app.use("/informes", InformesRouter);
+    app.use("/pacientes", PacientesRoutes);
+    app.use("/citas", CitasRoutes);
+    app.use("/antecedentes", AntecedentesRoutes);
+    app.use("/informes", InformesRoutes);
 
     // 404 - catch all
     app.use((req, res) => {

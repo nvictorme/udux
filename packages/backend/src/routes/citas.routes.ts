@@ -37,8 +37,9 @@ router.get("/:id", async (req: Request, res: Response) => {
   try {
     const idCita = parseInt(req.params.id);
     if (!idCita) throw new Error("Id de cita inválido");
-    const cita = await AppDataSource.getRepository(Cita).findOneBy({
-      id: idCita,
+    const cita = await AppDataSource.getRepository(Cita).findOne({
+      where: { id: idCita },
+      relations: ["paciente", "paciente.antecedentes"],
     });
     res.status(200).json({ cita });
   } catch (error: any) {

@@ -6,8 +6,8 @@ import { API_BASE_URL } from "@/config";
 
 // Define the shape of our store.
 export type AntecedentesStore = {
-  antecedentes: IAntecedentes[];
-  listarAntecedentes: () => void;
+  antecedente: IAntecedentes | null;
+  fetchAntecedente: (id: number) => void;
   crearAntecedente: (antecedente: IAntecedentes) => void;
   actualizarAntecedente: (antecedente: IAntecedentes) => void;
   eliminarAntecedente: (antecedente: IAntecedentes) => void;
@@ -16,12 +16,12 @@ export type AntecedentesStore = {
 // Create a store with an initial state.
 export const useAntecedentesStore = create<AntecedentesStore>()(
   persist(
-    (set, get): AntecedentesStore => ({
-      antecedentes: [],
-      listarAntecedentes: async () => {
-        const response = await fetch(`${API_BASE_URL}/antecedentes`);
-        const antecedentes = await response.json();
-        set({ antecedentes });
+    (set): AntecedentesStore => ({
+      antecedente: null,
+      fetchAntecedente: async (id) => {
+        const response = await fetch(`${API_BASE_URL}/antecedentes/${id}`);
+        const data = await response.json();
+        set({ antecedente: data.antecedente });
       },
       crearAntecedente: async (antecedente) => {
         const response = await fetch(`${API_BASE_URL}/antecedentes`, {
@@ -32,7 +32,7 @@ export const useAntecedentesStore = create<AntecedentesStore>()(
           body: JSON.stringify(antecedente),
         });
         const data = await response.json();
-        set({ antecedentes: [...get().antecedentes, data.antecedente] });
+        set({ antecedente: data.antecedente });
       },
       actualizarAntecedente: async (antecedente) => {
         const response = await fetch(
@@ -46,10 +46,7 @@ export const useAntecedentesStore = create<AntecedentesStore>()(
           }
         );
         const data = await response.json();
-        const antecedentes = get().antecedentes.map((a) =>
-          a.id === data.antecedente.id ? data.antecedente : a
-        );
-        set({ antecedentes });
+        set({ antecedente: data.antecedente });
       },
       eliminarAntecedente: async (antecedente) => {
         const response = await fetch(
@@ -59,10 +56,7 @@ export const useAntecedentesStore = create<AntecedentesStore>()(
           }
         );
         if (response.status === 204) {
-          const antecedentes = get().antecedentes.filter(
-            (a) => a.id !== antecedente.id
-          );
-          set({ antecedentes });
+          set({ antecedente: null });
         }
       },
     }),

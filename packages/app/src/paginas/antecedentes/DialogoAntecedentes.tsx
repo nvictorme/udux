@@ -12,7 +12,7 @@ import { useCallback } from "react";
 interface DialogoAntecedentesProps {
   accion: "Crear" | "Actualizar";
   paciente: IPaciente;
-  antecedentes?: IAntecedentes;
+  antecedentes: IAntecedentes | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }

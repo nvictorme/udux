@@ -7,11 +7,13 @@ import { API_BASE_URL } from "@/config";
 // Define the shape of our store.
 export type CitasStore = {
   citas: ICita[];
+  cita: ICita | null;
   total: number;
   page: number;
   limit: number;
   pageCount: number;
   listarCitas: () => void;
+  fetchCita: (id: number) => void;
   crearCita: (cita: ICita) => void;
   actualizarCita: (cita: ICita) => void;
   eliminarCita: (cita: ICita) => void;
@@ -24,6 +26,7 @@ export const useCitasStore = create<CitasStore>()(
   persist(
     (set, get): CitasStore => ({
       citas: [],
+      cita: null,
       total: 0,
       page: 1,
       limit: 10,
@@ -34,6 +37,11 @@ export const useCitasStore = create<CitasStore>()(
         );
         const data = await response.json();
         set({ ...data });
+      },
+      fetchCita: async (id) => {
+        const response = await fetch(`${API_BASE_URL}/citas/${id}`);
+        const data = await response.json();
+        set({ cita: data.cita });
       },
       crearCita: async (cita) => {
         const response = await fetch(`${API_BASE_URL}/citas`, {

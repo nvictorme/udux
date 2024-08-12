@@ -7,27 +7,49 @@ import { DialogoPaciente } from "../pacientes/DialogoPaciente";
 import { useCitasStore } from "@/store/citas.store";
 import { Spinner } from "@/components/Spinner";
 import { usePacientesStore } from "@/store/pacientes.store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DialogoAntecedentes } from "../antecedentes/DialogoAntecedentes";
+import { useAntecedentesStore } from "@/store/antecedentes.store";
 
 export function PaginaConsulta() {
+  // Local state.
+  const [openPaciente, setOpenPaciente] = useState(false);
+  const [openAntecedentes, setOpenAntecedentes] = useState(false);
+
+  // Get the current cita id from the URL.
   const location = useLocation();
   // Get the cita id from the URL.
   const citaId = parseInt(location.pathname.split("/").pop() as string, 10);
 
   // Get the cita from the store.
-  const cita = useCitasStore().citas.find((c) => c.id === citaId);
+  const { cita, fetchCita } = useCitasStore();
 
   // Get paciente from the store.
-  const paciente = usePacientesStore().pacientes.find(
-    (p) => p.id === cita?.paciente?.id
-  );
-  const [openPaciente, setOpenPaciente] = useState(false);
+  const { paciente, fetchPaciente } = usePacientesStore();
 
   // Get the antecedentes from the store.
-  const antecedentes = paciente?.antecedentes || null;
-  const [openAntecedentes, setOpenAntecedentes] = useState(false);
+  const { antecedente, fetchAntecedente } = useAntecedentesStore();
 
+  // Fetch cita on mount.
+  useEffect(() => {
+    fetchCita(citaId);
+  }, [citaId, fetchCita]);
+
+  // Fetch paciente when cita changes.
+  useEffect(() => {
+    if (cita?.paciente) {
+      fetchPaciente(cita.paciente.id);
+    }
+  }, [cita, fetchPaciente]);
+
+  // Fetch antecedentes when paciente changes.
+  useEffect(() => {
+    if (paciente?.antecedentes) {
+      fetchAntecedente(paciente.antecedentes.id);
+    }
+  }, [paciente, fetchAntecedente]);
+
+  // Show a spinner while loading.
   if (!cita || !paciente) {
     return <Spinner />;
   }
@@ -105,48 +127,48 @@ export function PaginaConsulta() {
           <h1 className="text-2xl">Antecedentes</h1>
         </CardTitle>
         <CardContent>
-          {antecedentes ? (
+          {antecedente ? (
             <div className="grid grid-cols-6 gap-1 text-xl">
               <div className="col-span-2 flex flex-col gap-2">
                 <p>
                   <span className="font-light text-sm">Médicos:</span>
                   <br />
-                  <i>{antecedentes.medicos}</i>
+                  <i>{antecedente.medicos}</i>
                 </p>
               </div>
               <div className="col-span-2 flex flex-col gap-2">
                 <p>
                   <span className="font-light text-sm">Quirúrgicos:</span>
                   <br />
-                  <i>{antecedentes.quirurgicos}</i>
+                  <i>{antecedente.quirurgicos}</i>
                 </p>
               </div>
               <div className="col-span-2 flex flex-col gap-2">
                 <p>
                   <span className="font-light text-sm">Familiares:</span>
                   <br />
-                  <i>{antecedentes.familiares}</i>
+                  <i>{antecedente.familiares}</i>
                 </p>
               </div>
               <div className="col-span-2 flex flex-col gap-2">
                 <p>
                   <span className="font-light text-sm">Actividad física:</span>
                   <br />
-                  <i>{antecedentes.actividadFisica}</i>
+                  <i>{antecedente.actividadFisica}</i>
                 </p>
               </div>
               <div className="col-span-2 flex flex-col gap-2">
                 <p>
                   <span className="font-light text-sm">Alergias:</span>
                   <br />
-                  <i>{antecedentes.alergias}</i>
+                  <i>{antecedente.alergias}</i>
                 </p>
               </div>
               <div className="col-span-2 flex flex-col gap-2">
                 <p>
                   <span className="font-light text-sm">Medicamentos:</span>
                   <br />
-                  <i>{antecedentes.medicamentos}</i>
+                  <i>{antecedente.medicamentos}</i>
                 </p>
               </div>
             </div>
@@ -180,9 +202,9 @@ export function PaginaConsulta() {
         onOpenChange={setOpenPaciente}
       />
       <DialogoAntecedentes
-        accion={!antecedentes ? "Crear" : "Actualizar"}
+        accion={!antecedente ? "Crear" : "Actualizar"}
         paciente={paciente}
-        antecedentes={paciente.antecedentes}
+        antecedentes={antecedente}
         open={openAntecedentes}
         onOpenChange={setOpenAntecedentes}
       />
