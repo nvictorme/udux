@@ -16,9 +16,9 @@
     "lerna": "^8.1.8"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "build": "lerna run build",
+    "dev": "lerna run dev",
     "serve": "lerna run serve",
     "start": "lerna run start",
     "reload": "pm2 reload all",
