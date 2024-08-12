@@ -37,73 +37,79 @@ export function FormularioAntecedentes({
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="grid gap-4 py-4">
         <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="medicos" className="text-right">
+            Médicos
+          </Label>
+          <Textarea
+            id="medicos"
+            className="col-span-3 text-xl"
+            defaultValue={antecedentes?.medicos}
+            {...register("medicos", { required: false })}
+          />
+        </div>
+
+        <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="quirurgicos" className="text-right">
             Quirúrgicos
           </Label>
           <Textarea
             id="quirurgicos"
-            className="col-span-3"
+            className="col-span-3 text-xl"
             defaultValue={antecedentes?.quirurgicos}
             {...register("quirurgicos", { required: false })}
           />
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="familiares" className="text-right">
             Familiares
           </Label>
           <Textarea
             id="familiares"
-            className="col-span-3"
+            className="col-span-3 text-xl"
             defaultValue={antecedentes?.familiares}
             {...register("familiares", { required: false })}
           />
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="actividadFisica" className="text-right">
             Actividad Física
           </Label>
           <Textarea
             id="actividadFisica"
-            className="col-span-3"
+            className="col-span-3 text-xl"
             defaultValue={antecedentes?.actividadFisica}
             {...register("actividadFisica", { required: false })}
           />
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="alergias" className="text-right">
             Alergias
           </Label>
           <Textarea
             id="alergias"
-            className="col-span-3"
+            className="col-span-3 text-xl"
             defaultValue={antecedentes?.alergias}
             {...register("alergias", { required: false })}
           />
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="medicamentos" className="text-right">
             Medicamentos
           </Label>
           <Textarea
             id="medicamentos"
-            className="col-span-3"
+            className="col-span-3 text-xl"
             defaultValue={antecedentes?.medicamentos}
             {...register("medicamentos", { required: false })}
           />
         </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="medicos" className="text-right">
-            Médicos
-          </Label>
-          <Textarea
-            id="medicos"
-            className="col-span-3"
-            defaultValue={antecedentes?.medicos}
-            {...register("medicos", { required: false })}
-          />
-        </div>
 
-        <div className="self-center m-auto">
+        <div className="flex flex-col justify-center gap-6 my-4">
+          <Button type="submit">{accion} Antecedentes</Button>
           <Button
             type="button"
             variant="link"
@@ -112,7 +118,6 @@ export function FormularioAntecedentes({
           >
             Cancelar
           </Button>
-          <Button type="submit">{accion} Antecedentes</Button>
         </div>
       </div>
     </form>

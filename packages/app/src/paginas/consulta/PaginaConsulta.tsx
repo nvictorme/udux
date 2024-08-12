@@ -1,8 +1,3 @@
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
 import { FormularioCita } from "../citas/FormularioCita";
 import { useLocation } from "react-router-dom";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
@@ -39,121 +34,145 @@ export function PaginaConsulta() {
 
   return (
     <div>
-      <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel className="mx-4">
-          <Card className="p-4">
-            <CardTitle>
-              <h1 className="text-2xl font-bold">Paciente</h1>
-            </CardTitle>
-            <CardContent className="my-4">
-              <div className="grid grid-cols-4 gap-4">
-                <div className="col-span-2 flex flex-col gap-2">
-                  <p>
-                    <span className="font-bold">Nombre:</span> {paciente.nombre}
-                  </p>
-                  <p>
-                    <span className="font-bold">Apellido:</span>{" "}
-                    {paciente.apellido}
-                  </p>
-                  <p>
-                    <span className="font-bold">Cédula:</span> {paciente.cedula}
-                  </p>
-                  <p>
-                    <span className="font-bold">Género:</span> {paciente.genero}
-                  </p>
-                  <p>
-                    <span className="font-bold">Edad:</span>{" "}
-                    {calcularEdad(paciente.fechaNacimiento)}
-                  </p>
-                  <p>
-                    <span className="font-bold">Estado civil:</span>{" "}
-                    {paciente.estadoCivil}
-                  </p>
-                </div>
-                <div className="col-span-2 gap-2 flex flex-col">
-                  <p>
-                    <span className="font-bold">Profesión:</span>{" "}
-                    {paciente.profesion}
-                  </p>
-                  <p>
-                    <span className="font-bold">Procedencia:</span>{" "}
-                    {paciente.procedencia}
-                  </p>
-                  <p>
-                    <span className="font-bold">Teléfono:</span>{" "}
-                    {paciente.telefono}
-                  </p>
-                  <p>
-                    <span className="font-bold">Email:</span> {paciente.email}
-                  </p>
-                </div>
+      {/* Paciente */}
+      <Card className="p-4">
+        <CardTitle>
+          <h1 className="text-2xl">Paciente</h1>
+        </CardTitle>
+        <CardContent className="my-4">
+          <div className="grid grid-cols-6 gap-4 text-xl">
+            <div className="col-span-2 flex flex-col gap-2">
+              <p>
+                <span className="font-light text-sm">Nombre:</span>
+                <br />
+                <span>{paciente.nombre}</span>
+              </p>
+              <p>
+                <span className="font-light text-sm">Apellido:</span>
+                <br />
+                {paciente.apellido}
+              </p>
+              <p>
+                <span className="font-light text-sm">Cédula:</span>
+                <br />
+                {paciente.cedula}
+              </p>
+            </div>
+            <div className="col-span-2 gap-2 flex flex-col">
+              <p>
+                <span className="font-light text-sm">Género:</span>
+                <br />
+                {paciente.genero}
+              </p>
+              <p>
+                <span className="font-light text-sm">Edad:</span>
+                <br />
+                {calcularEdad(paciente.fechaNacimiento)}
+              </p>
+              <p>
+                <span className="font-light text-sm">Estado civil:</span>
+                <br />
+                {paciente.estadoCivil}
+              </p>
+            </div>
+            <div className="col-span-2 gap-2 flex flex-col">
+              <p>
+                <span className="font-light text-sm">Profesión:</span>
+                <br />
+                {paciente.profesion}
+              </p>
+              <p>
+                <span className="font-light text-sm">Procedencia:</span>
+                <br />
+                {paciente.procedencia}
+              </p>
+              <p>
+                <span className="font-light text-sm">Teléfono:</span>
+                <br />
+                {paciente.telefono}
+              </p>
+            </div>
+          </div>
+        </CardContent>
+        <Button variant="secondary" onClick={() => setOpenPaciente(true)}>
+          Actualizar Paciente
+        </Button>
+      </Card>
+
+      {/* Antecedentes */}
+      <Card className="p-4 my-4">
+        <CardTitle>
+          <h1 className="text-2xl">Antecedentes</h1>
+        </CardTitle>
+        <CardContent>
+          {antecedentes ? (
+            <div className="grid grid-cols-6 gap-1 text-xl">
+              <div className="col-span-2 flex flex-col gap-2">
+                <p>
+                  <span className="font-light text-sm">Médicos:</span>
+                  <br />
+                  <i>{antecedentes.medicos}</i>
+                </p>
               </div>
-            </CardContent>
-            <Button variant="secondary" onClick={() => setOpenPaciente(true)}>
-              Actualizar Paciente
-            </Button>
-          </Card>
-          <Card className="p-4 mt-4">
-            <CardTitle>
-              <h1 className="text-2xl font-bold">Antecedentes</h1>
-            </CardTitle>
-            <CardContent>
-              {antecedentes ? (
-                <div className="grid grid-cols-4 gap-4">
-                  <div className="col-span-2 flex flex-col gap-2">
-                    <p>
-                      <span className="font-bold">Médicos:</span>{" "}
-                      <i>{antecedentes.medicos}</i>
-                    </p>
-                    <p>
-                      <span className="font-bold">Quirúrgicos:</span>{" "}
-                      <i>{antecedentes.quirurgicos}</i>
-                    </p>
-                    <p>
-                      <span className="font-bold">Familiares:</span>{" "}
-                      <i>{antecedentes.familiares}</i>
-                    </p>
-                    <p>
-                      <span className="font-bold">Actividad física:</span>{" "}
-                      <i>{antecedentes.actividadFisica}</i>
-                    </p>
-                    <p>
-                      <span className="font-bold">Alergias:</span>{" "}
-                      <i>{antecedentes.alergias}</i>
-                    </p>
-                    <p>
-                      <span className="font-bold">Medicamentos:</span>{" "}
-                      <i>{antecedentes.medicamentos}</i>
-                    </p>
-                  </div>
-                </div>
-              ) : null}
-            </CardContent>
-            <Button
-              variant="secondary"
-              onClick={() => setOpenAntecedentes(true)}
-            >
-              Actualizar Antecedentes
-            </Button>
-          </Card>
-        </ResizablePanel>
-        <ResizableHandle />
-        <ResizablePanel className="mx-4">
-          <Card className="p-4">
-            <CardTitle>
-              <h1 className="text-2xl font-bold">Consulta</h1>
-            </CardTitle>
-            <CardContent>
-              <FormularioCita
-                accion="Actualizar"
-                paciente={paciente}
-                cita={cita}
-                onClose={() => window.history.back()}
-              />
-            </CardContent>
-          </Card>
-        </ResizablePanel>
-      </ResizablePanelGroup>
+              <div className="col-span-2 flex flex-col gap-2">
+                <p>
+                  <span className="font-light text-sm">Quirúrgicos:</span>
+                  <br />
+                  <i>{antecedentes.quirurgicos}</i>
+                </p>
+              </div>
+              <div className="col-span-2 flex flex-col gap-2">
+                <p>
+                  <span className="font-light text-sm">Familiares:</span>
+                  <br />
+                  <i>{antecedentes.familiares}</i>
+                </p>
+              </div>
+              <div className="col-span-2 flex flex-col gap-2">
+                <p>
+                  <span className="font-light text-sm">Actividad física:</span>
+                  <br />
+                  <i>{antecedentes.actividadFisica}</i>
+                </p>
+              </div>
+              <div className="col-span-2 flex flex-col gap-2">
+                <p>
+                  <span className="font-light text-sm">Alergias:</span>
+                  <br />
+                  <i>{antecedentes.alergias}</i>
+                </p>
+              </div>
+              <div className="col-span-2 flex flex-col gap-2">
+                <p>
+                  <span className="font-light text-sm">Medicamentos:</span>
+                  <br />
+                  <i>{antecedentes.medicamentos}</i>
+                </p>
+              </div>
+            </div>
+          ) : null}
+        </CardContent>
+        <Button variant="secondary" onClick={() => setOpenAntecedentes(true)}>
+          Actualizar Antecedentes
+        </Button>
+      </Card>
+
+      {/* Consulta */}
+      <Card className="p-4">
+        <CardTitle>
+          <h1 className="text-2xl">Consulta</h1>
+        </CardTitle>
+        <CardContent>
+          <FormularioCita
+            accion="Actualizar"
+            paciente={paciente}
+            cita={cita}
+            onClose={() => window.history.back()}
+          />
+        </CardContent>
+      </Card>
+
+      {/* Modal Dialogs */}
       <DialogoPaciente
         accion="Actualizar"
         paciente={paciente}

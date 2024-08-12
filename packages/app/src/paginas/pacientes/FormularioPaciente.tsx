@@ -174,7 +174,7 @@ export function FormularioPaciente({
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="email" className="text-right">
-            Correo Electrónico
+            E-mail
           </Label>
           <Input
             id="email"
@@ -193,7 +193,8 @@ export function FormularioPaciente({
             {...register("direccion", { required: false, maxLength: 100 })}
           />
         </div>
-        <div className="self-center m-auto">
+        <div className="flex flex-col justify-center gap-6 my-4">
+          <Button type="submit">{accion} Paciente</Button>
           <Button
             type="button"
             variant="link"
@@ -202,7 +203,6 @@ export function FormularioPaciente({
           >
             Cancelar
           </Button>
-          <Button type="submit">{accion} Paciente</Button>
         </div>
       </div>
     </form>

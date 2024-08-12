@@ -35,7 +35,7 @@ export function DialogoCita({
   );
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-lg">
+      <DialogContent className="max-lg scrollable-content">
         <DialogHeader>
           <DialogTitle>{accion} Cita</DialogTitle>
           <DialogDescription>

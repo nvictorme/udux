@@ -65,7 +65,7 @@ export function FormularioCita({
           </Label>
           <Textarea
             id="motivoConsulta"
-            className="col-span-3"
+            className="col-span-3 text-xl"
             {...register("motivoConsulta", { required: true, maxLength: 200 })}
           />
         </div>
@@ -75,7 +75,7 @@ export function FormularioCita({
           </Label>
           <Textarea
             id="procedimiento"
-            className="col-span-3"
+            className="col-span-3 text-xl"
             {...register("procedimiento", { required: false })}
           />
         </div>
@@ -85,7 +85,7 @@ export function FormularioCita({
           </Label>
           <Textarea
             id="enfermedadActual"
-            className="col-span-3"
+            className="col-span-3 text-xl"
             {...register("enfermedadActual", { required: false })}
           />
         </div>
@@ -95,7 +95,7 @@ export function FormularioCita({
           </Label>
           <Textarea
             id="examenClinico"
-            className="col-span-3"
+            className="col-span-3 text-xl"
             {...register("examenClinico", { required: false })}
           />
         </div>
@@ -105,7 +105,7 @@ export function FormularioCita({
           </Label>
           <Textarea
             id="impresionDiagnostica"
-            className="col-span-3"
+            className="col-span-3 text-xl"
             {...register("impresionDiagnostica", { required: false })}
           />
         </div>
@@ -115,7 +115,7 @@ export function FormularioCita({
           </Label>
           <Textarea
             id="tratamiento"
-            className="col-span-3"
+            className="col-span-3 text-xl"
             {...register("tratamiento", { required: false })}
           />
         </div>
@@ -125,7 +125,7 @@ export function FormularioCita({
           </Label>
           <Textarea
             id="observaciones"
-            className="col-span-3"
+            className="col-span-3 text-xl"
             {...register("observaciones", { required: false })}
           />
         </div>
@@ -136,7 +136,7 @@ export function FormularioCita({
           <Input
             id="honorarios"
             type="number"
-            className="col-span-3"
+            className="col-span-3 text-xl"
             {...register("honorarios", { required: false })}
           />
         </div>
@@ -168,16 +168,16 @@ export function FormularioCita({
             )}
           />
         </div>
-        <div className="self-center m-auto">
-          {/* <Button
+        <div className="flex flex-col justify-center gap-6 my-4">
+          <Button type="submit">Guardar Cambios</Button>
+          <Button
             type="button"
             variant="link"
-            className="text-red-400"
+            className="text-red-400 text-xs"
             onClick={onClose}
           >
             Cancelar
-          </Button> */}
-          <Button type="submit">Guardar Cambios</Button>
+          </Button>
         </div>
       </div>
     </form>
