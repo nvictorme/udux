@@ -11,6 +11,7 @@ export type AntecedentesStore = {
   crearAntecedente: (antecedente: IAntecedentes) => void;
   actualizarAntecedente: (antecedente: IAntecedentes) => void;
   eliminarAntecedente: (antecedente: IAntecedentes) => void;
+  resetAntecedente: () => void;
 };
 
 // Create a store with an initial state.
@@ -59,6 +60,7 @@ export const useAntecedentesStore = create<AntecedentesStore>()(
           set({ antecedente: null });
         }
       },
+      resetAntecedente: () => set({ antecedente: null }),
     }),
     {
       name: "antecedentes-storage",

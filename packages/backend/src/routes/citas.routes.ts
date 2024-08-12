@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { Cita } from "../entity/Cita";
 import { AppDataSource } from "../data-source";
+import { MoreThanOrEqual } from "typeorm";
 
 const router = Router();
 
@@ -13,7 +14,7 @@ router.get("/", async (req: Request, res: Response) => {
     const [citas, total] = await AppDataSource.getRepository(Cita).findAndCount(
       {
         where: {
-          fechaCita: today,
+          fechaCita: MoreThanOrEqual(today),
         },
         take: parseInt(limit as string),
         skip: (parseInt(page as string) - 1) * parseInt(limit as string),

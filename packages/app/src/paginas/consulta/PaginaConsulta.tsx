@@ -22,32 +22,42 @@ export function PaginaConsulta() {
   const citaId = parseInt(location.pathname.split("/").pop() as string, 10);
 
   // Get the cita from the store.
-  const { cita, fetchCita } = useCitasStore();
+  const { cita, fetchCita, resetCita } = useCitasStore();
 
   // Get paciente from the store.
-  const { paciente, fetchPaciente } = usePacientesStore();
+  const { paciente, fetchPaciente, resetPaciente } = usePacientesStore();
 
   // Get the antecedentes from the store.
-  const { antecedente, fetchAntecedente } = useAntecedentesStore();
+  const { antecedente, fetchAntecedente, resetAntecedente } =
+    useAntecedentesStore();
 
   // Fetch cita on mount.
   useEffect(() => {
     fetchCita(citaId);
-  }, [citaId, fetchCita]);
+    return () => {
+      resetCita();
+    };
+  }, [citaId, fetchCita, resetCita]);
 
   // Fetch paciente when cita changes.
   useEffect(() => {
     if (cita?.paciente) {
       fetchPaciente(cita.paciente.id);
     }
-  }, [cita, fetchPaciente]);
+    return () => {
+      resetPaciente();
+    };
+  }, [cita, fetchPaciente, resetPaciente]);
 
   // Fetch antecedentes when paciente changes.
   useEffect(() => {
     if (paciente?.antecedentes) {
       fetchAntecedente(paciente.antecedentes.id);
     }
-  }, [paciente, fetchAntecedente]);
+    return () => {
+      resetAntecedente();
+    };
+  }, [paciente, fetchAntecedente, resetAntecedente]);
 
   // Show a spinner while loading.
   if (!cita || !paciente) {

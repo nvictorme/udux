@@ -27,6 +27,7 @@ export type PacientesStore = {
   eliminarPaciente: (paciente: IPaciente) => void;
   setPage: (page: number) => void;
   setLimit: (limit: number) => void;
+  resetPaciente: () => void;
   resetPacientes: () => void;
 };
 
@@ -73,7 +74,6 @@ export const usePacientesStore = create<PacientesStore>()(
         set({ pacientes: [data.paciente, ...get().pacientes] });
       },
       actualizarPaciente: async (paciente) => {
-        console.log("paciente", paciente);
         const response = await fetch(
           `${API_BASE_URL}/pacientes/${paciente.id}`,
           {
@@ -85,7 +85,6 @@ export const usePacientesStore = create<PacientesStore>()(
           }
         );
         const data = await response.json();
-        console.log("data", data);
         const pacientes = get().pacientes.map((p) =>
           p.id === data.paciente.id ? data.paciente : p
         );
@@ -110,6 +109,9 @@ export const usePacientesStore = create<PacientesStore>()(
       setLimit: (limit) => {
         set({ limit });
         get().listarPacientes({});
+      },
+      resetPaciente: () => {
+        set({ paciente: null });
       },
       resetPacientes: () => {
         set({ ...initialState });

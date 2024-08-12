@@ -19,18 +19,27 @@ export type CitasStore = {
   eliminarCita: (cita: ICita) => void;
   setPage: (page: number) => void;
   setLimit: (limit: number) => void;
+  resetCita: () => void;
+  resetCitas: () => void;
+};
+
+const initialState: Pick<
+  CitasStore,
+  "citas" | "cita" | "total" | "page" | "limit" | "pageCount"
+> = {
+  citas: [],
+  cita: null,
+  total: 0,
+  page: 1,
+  limit: 10,
+  pageCount: 1,
 };
 
 // Create a store with an initial state.
 export const useCitasStore = create<CitasStore>()(
   persist(
     (set, get): CitasStore => ({
-      citas: [],
-      cita: null,
-      total: 0,
-      page: 1,
-      limit: 10,
-      pageCount: 1,
+      ...initialState,
       listarCitas: async () => {
         const response = await fetch(
           `${API_BASE_URL}/citas?page=${get().page}&limit=${get().limit}`
@@ -83,6 +92,11 @@ export const useCitasStore = create<CitasStore>()(
       },
       setLimit: (limit) => {
         set({ limit });
+        get().listarCitas();
+      },
+      resetCita: () => set({ cita: null }),
+      resetCitas: () => {
+        set({ ...initialState });
         get().listarCitas();
       },
     }),
