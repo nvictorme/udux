@@ -14,6 +14,7 @@ import { DialogoCita } from "../citas/DialogoCita";
 import { useState } from "react";
 import { DialogoPaciente } from "./DialogoPaciente";
 import { calcularEdad } from "shared/src/helpers";
+import { DialogoAntecedentes } from "../antecedentes/DialogoAntecedentes";
 
 // This type is used to define the shape of our data.
 export type Paciente = Omit<
@@ -69,8 +70,9 @@ export const columns: ColumnDef<Paciente>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const [dialogoCitaOpen, setDialogoCitaOpen] = useState(false);
-      const [dialogoPacienteOpen, setDialogoPacienteOpen] = useState(false);
+      const [openCita, setOpenCita] = useState(false);
+      const [openPaciente, setOpenPaciente] = useState(false);
+      const [openAntecedentes, setOpenAntecedentes] = useState(false);
       const paciente = row.original as IPaciente;
       return (
         <>
@@ -82,15 +84,17 @@ export const columns: ColumnDef<Paciente>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setDialogoCitaOpen(true)}>
+              <DropdownMenuItem onClick={() => setOpenCita(true)}>
                 <PlusCircle className="mr-2 h-4 w-4" /> Cita
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Antecedentes</DropdownMenuItem>
-              <DropdownMenuItem>Informes</DropdownMenuItem>
-              <DropdownMenuItem>Citas</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setOpenAntecedentes(true)}>
+                Antecedentes
+              </DropdownMenuItem>
+              <DropdownMenuItem disabled>Informes</DropdownMenuItem>
+              <DropdownMenuItem disabled>Citas</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setDialogoPacienteOpen(true)}>
+              <DropdownMenuItem onClick={() => setOpenPaciente(true)}>
                 <Edit className="mr-2 h-4 w-4" /> Actualizar
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -98,14 +102,21 @@ export const columns: ColumnDef<Paciente>[] = [
           <DialogoCita
             accion="Crear"
             paciente={paciente}
-            open={dialogoCitaOpen}
-            onOpenChange={setDialogoCitaOpen}
+            open={openCita}
+            onOpenChange={setOpenCita}
           />
           <DialogoPaciente
             accion="Actualizar"
             paciente={paciente}
-            open={dialogoPacienteOpen}
-            onOpenChange={setDialogoPacienteOpen}
+            open={openPaciente}
+            onOpenChange={setOpenPaciente}
+          />
+          <DialogoAntecedentes
+            accion={!paciente.antecedentes ? "Crear" : "Actualizar"}
+            paciente={paciente}
+            antecedentes={paciente.antecedentes}
+            open={openAntecedentes}
+            onOpenChange={setOpenAntecedentes}
           />
         </>
       );

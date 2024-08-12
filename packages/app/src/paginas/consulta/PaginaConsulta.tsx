@@ -13,6 +13,7 @@ import { useCitasStore } from "@/store/citas.store";
 import { Spinner } from "@/components/Spinner";
 import { usePacientesStore } from "@/store/pacientes.store";
 import { useState } from "react";
+import { DialogoAntecedentes } from "../antecedentes/DialogoAntecedentes";
 
 export function PaginaConsulta() {
   const location = useLocation();
@@ -26,7 +27,11 @@ export function PaginaConsulta() {
   const paciente = usePacientesStore().pacientes.find(
     (p) => p.id === cita?.paciente?.id
   );
-  const [dialogoPacienteOpen, setDialogoPacienteOpen] = useState(false);
+  const [openPaciente, setOpenPaciente] = useState(false);
+
+  // Get the antecedentes from the store.
+  const antecedentes = paciente?.antecedentes || null;
+  const [openAntecedentes, setOpenAntecedentes] = useState(false);
 
   if (!cita || !paciente) {
     return <Spinner />;
@@ -84,10 +89,7 @@ export function PaginaConsulta() {
                 </div>
               </div>
             </CardContent>
-            <Button
-              variant="secondary"
-              onClick={() => setDialogoPacienteOpen(true)}
-            >
+            <Button variant="secondary" onClick={() => setOpenPaciente(true)}>
               Actualizar Paciente
             </Button>
           </Card>
@@ -96,12 +98,32 @@ export function PaginaConsulta() {
               <h1 className="text-2xl font-bold">Antecedentes</h1>
             </CardTitle>
             <CardContent>
-              {paciente.antecedentes ? (
+              {antecedentes ? (
                 <div className="grid grid-cols-4 gap-4">
                   <div className="col-span-2 flex flex-col gap-2">
                     <p>
+                      <span className="font-bold">Médicos:</span>{" "}
+                      <i>{antecedentes.medicos}</i>
+                    </p>
+                    <p>
+                      <span className="font-bold">Quirúrgicos:</span>{" "}
+                      <i>{antecedentes.quirurgicos}</i>
+                    </p>
+                    <p>
+                      <span className="font-bold">Familiares:</span>{" "}
+                      <i>{antecedentes.familiares}</i>
+                    </p>
+                    <p>
+                      <span className="font-bold">Actividad física:</span>{" "}
+                      <i>{antecedentes.actividadFisica}</i>
+                    </p>
+                    <p>
                       <span className="font-bold">Alergias:</span>{" "}
-                      {paciente.antecedentes.alergias}
+                      <i>{antecedentes.alergias}</i>
+                    </p>
+                    <p>
+                      <span className="font-bold">Medicamentos:</span>{" "}
+                      <i>{antecedentes.medicamentos}</i>
                     </p>
                   </div>
                 </div>
@@ -109,11 +131,9 @@ export function PaginaConsulta() {
             </CardContent>
             <Button
               variant="secondary"
-              onClick={() => {
-                console.log("Actualizar antecedentes");
-              }}
+              onClick={() => setOpenAntecedentes(true)}
             >
-              Actualizar antecedentes
+              Actualizar Antecedentes
             </Button>
           </Card>
         </ResizablePanel>
@@ -137,8 +157,15 @@ export function PaginaConsulta() {
       <DialogoPaciente
         accion="Actualizar"
         paciente={paciente}
-        open={dialogoPacienteOpen}
-        onOpenChange={setDialogoPacienteOpen}
+        open={openPaciente}
+        onOpenChange={setOpenPaciente}
+      />
+      <DialogoAntecedentes
+        accion={!antecedentes ? "Crear" : "Actualizar"}
+        paciente={paciente}
+        antecedentes={paciente.antecedentes}
+        open={openAntecedentes}
+        onOpenChange={setOpenAntecedentes}
       />
     </div>
   );
