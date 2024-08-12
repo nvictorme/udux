@@ -17,7 +17,7 @@ router.get("/", async (req: Request, res: Response) => {
         },
         take: parseInt(limit as string),
         skip: (parseInt(page as string) - 1) * parseInt(limit as string),
-        relations: ["paciente"],
+        relations: ["paciente", "paciente.antecedentes"],
         order: { id: "ASC" },
       }
     );
