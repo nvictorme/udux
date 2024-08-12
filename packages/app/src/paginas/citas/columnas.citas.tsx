@@ -9,12 +9,10 @@ import {
 } from "@/components/ui/select";
 import { useCitasStore } from "@/store/citas.store";
 import { ColumnDef } from "@tanstack/react-table";
-import { useState } from "react";
 import { ESTATUS_CITA } from "shared/src/enums";
 import { ICita } from "shared/src/interfaces";
-import { DialogoCita } from "./DialogoCita";
 import { formatDate } from "shared/src/helpers";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // This type is used to define the shape of our data.
 export type Cita = Omit<
