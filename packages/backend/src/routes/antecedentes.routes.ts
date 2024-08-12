@@ -4,17 +4,18 @@ import { AppDataSource } from "../data-source";
 
 const router = Router();
 
-// GET /antecedentes/paciente/:id
-router.get("/paciente/:id", async (req: Request, res: Response) => {
+// GET /antecedentes/:id
+router.get("/:id", async (req: Request, res: Response) => {
   try {
-    const idPaciente = parseInt(req.params.id);
-    if (!idPaciente) throw new Error("Id de paciente inválido");
-    const antecedentes = await AppDataSource.getRepository(
+    const idAntecedentes = parseInt(req.params.id);
+    if (!idAntecedentes) throw new Error("Id de antecedentes inválido");
+    const antecedente = await AppDataSource.getRepository(
       Antecedentes
-    ).findOne({
-      where: { paciente: { id: idPaciente } },
+    ).findOneBy({
+      id: idAntecedentes,
     });
-    res.status(200).json({ antecedentes });
+    if (!antecedente) throw new Error("Antecedentes no encontrados");
+    res.status(200).json({ antecedente });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
@@ -23,11 +24,11 @@ router.get("/paciente/:id", async (req: Request, res: Response) => {
 // POST /antecedentes
 router.post("/", async (req: Request, res: Response) => {
   try {
-    const antecedentes = AppDataSource.getRepository(Antecedentes).create(
+    const antecedente = AppDataSource.getRepository(Antecedentes).create(
       req.body
     );
-    await AppDataSource.getRepository(Antecedentes).save(antecedentes);
-    res.status(201).json({ antecedentes });
+    await AppDataSource.getRepository(Antecedentes).save(antecedente);
+    res.status(201).json({ antecedente });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

@@ -9,7 +9,7 @@ import { IAntecedentes, IPaciente } from "shared/src/interfaces";
 interface FormularioAntecedentesProps {
   accion: "Crear" | "Actualizar";
   paciente: IPaciente;
-  antecedentes?: IAntecedentes;
+  antecedentes: IAntecedentes | null;
   onClose?: () => void;
 }
 

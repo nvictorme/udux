@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import { Paciente } from "../entity/Paciente";
 import { AppDataSource } from "../data-source";
 import { Like } from "typeorm";
+import { Antecedentes } from "../entity/Antecedentes";
 
 const router = Router();
 
@@ -41,8 +42,9 @@ router.get("/:id", async (req: Request, res: Response) => {
   try {
     const idPaciente = parseInt(req.params.id);
     if (!idPaciente) throw new Error("Id de paciente inválido");
-    const paciente = await AppDataSource.getRepository(Paciente).findOneBy({
-      id: idPaciente,
+    const paciente = await AppDataSource.getRepository(Paciente).findOne({
+      where: { id: idPaciente },
+      relations: ["antecedentes"],
     });
     res.status(200).json({ paciente });
   } catch (error: any) {

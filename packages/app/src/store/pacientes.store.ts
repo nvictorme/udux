@@ -7,6 +7,7 @@ import { API_BASE_URL } from "@/config";
 // Define the shape of our store.
 export type PacientesStore = {
   pacientes: IPaciente[];
+  paciente: IPaciente | null;
   total: number;
   page: number;
   limit: number;
@@ -20,6 +21,7 @@ export type PacientesStore = {
     apellido?: string;
     cedula?: string;
   }) => void;
+  fetchPaciente: (id: number) => void;
   crearPaciente: (paciente: IPaciente) => void;
   actualizarPaciente: (paciente: IPaciente) => void;
   eliminarPaciente: (paciente: IPaciente) => void;
@@ -30,9 +32,10 @@ export type PacientesStore = {
 
 const initialState: Pick<
   PacientesStore,
-  "pacientes" | "total" | "page" | "limit" | "pageCount"
+  "pacientes" | "paciente" | "total" | "page" | "limit" | "pageCount"
 > = {
   pacientes: [],
+  paciente: null,
   total: 0,
   page: 1,
   limit: 10,
@@ -53,6 +56,11 @@ export const usePacientesStore = create<PacientesStore>()(
         const data = await response.json();
         set({ ...data });
       },
+      fetchPaciente: async (id) => {
+        const response = await fetch(`${API_BASE_URL}/pacientes/${id}`);
+        const data = await response.json();
+        set({ paciente: data.paciente });
+      },
       crearPaciente: async (paciente) => {
         const response = await fetch(`${API_BASE_URL}/pacientes`, {
           method: "POST",
@@ -65,6 +73,7 @@ export const usePacientesStore = create<PacientesStore>()(
         set({ pacientes: [data.paciente, ...get().pacientes] });
       },
       actualizarPaciente: async (paciente) => {
+        console.log("paciente", paciente);
         const response = await fetch(
           `${API_BASE_URL}/pacientes/${paciente.id}`,
           {
@@ -76,10 +85,11 @@ export const usePacientesStore = create<PacientesStore>()(
           }
         );
         const data = await response.json();
+        console.log("data", data);
         const pacientes = get().pacientes.map((p) =>
           p.id === data.paciente.id ? data.paciente : p
         );
-        set({ pacientes });
+        set({ pacientes, paciente: data.paciente });
       },
       eliminarPaciente: async (paciente) => {
         const response = await fetch(
