@@ -21,10 +21,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "build:dev": "tsc --watch",
-    "serve:dev": "node --env-file=.env --watch dist/index.js",
-    "dev": "concurrently \"npm run build:dev\" \"npm run serve:dev\"",
-    "serve": "node --env-file=.env dist/index.js",
+    "dev": "ts-node src/index.ts --watch",
+    "serve": "ts-node src/index.ts",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "npm run typeorm -- migration:generate -d src/data-source.ts",
     "migration:run": "npm run typeorm -- migration:run -d src/data-source.ts",

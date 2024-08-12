@@ -5,8 +5,8 @@ import {
   ICita,
   IInforme,
   IPaciente,
-} from "shared/dist/interfaces";
-import { GENERO, ESTADO_CIVIL } from "shared/dist/enums";
+} from "shared/src/interfaces";
+import { GENERO, ESTADO_CIVIL } from "shared/src/enums";
 import { Informe } from "./Informe";
 import { Antecedentes } from "./Antecedentes";
 import { Cita } from "./Cita";

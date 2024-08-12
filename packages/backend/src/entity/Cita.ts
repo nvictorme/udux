@@ -1,8 +1,8 @@
 import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
 import { Base } from "./Base";
 import { Paciente } from "./Paciente";
-import { ICita } from "shared/dist/interfaces";
-import { ESTATUS_CITA } from "shared/dist/enums";
+import { ICita } from "shared/src/interfaces";
+import { ESTATUS_CITA } from "shared/src/enums";
 
 @Entity("citas")
 export class Cita extends Base implements ICita {

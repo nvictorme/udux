@@ -1,2 +1,4 @@
 node_modules/
 packages/backend/database.sqlite
+
+.DS_Store

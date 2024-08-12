@@ -1,7 +1,7 @@
 import { Entity, Column, ManyToOne, JoinColumn } from "typeorm";
 import { Base } from "./Base";
 import { Paciente } from "./Paciente";
-import { IInforme } from "shared/dist/interfaces";
+import { IInforme } from "shared/src/interfaces";
 
 @Entity("informes")
 export class Informe extends Base implements IInforme {

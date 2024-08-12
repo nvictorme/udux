@@ -5,9 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "docker:dev": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build",
-    "docker:prod": "docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build",
     "build": "tsc -b && vite build",
+    "serve": "vite preview --port 80",
     "lint": "eslint .",
     "preview": "vite preview"
   },
