@@ -94,19 +94,13 @@ export const columns: ColumnDef<Cita>[] = [
     header: "Acciones",
     cell: ({ row }) => {
       const cita = row.original as ICita;
-      // const { eliminarCita } = useCitasStore();
-      // const [open, setOpen] = useState(false);
       const navigate = useNavigate();
       return (
         <div className="flex gap-2">
           <Button
             variant="outline"
             className="border-blue-700 text-blue-700"
-            onClick={() => {
-              navigate(`/consulta/${cita.id}`, {
-                state: { cita },
-              });
-            }}
+            onClick={() => navigate(`/consulta/${cita.id}`)}
           >
             Consulta
           </Button>
