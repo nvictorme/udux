@@ -28,7 +28,7 @@ interface DataTableProps<TData, TValue> {
   setPage: (page: number) => void;
 }
 
-export function DataTabTable<TData, TValue>({
+export function DataTable<TData, TValue>({
   columns,
   data,
   pageCount,

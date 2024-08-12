@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { Paciente } from "../entity/Paciente";
 import { AppDataSource } from "../data-source";
+import { Like } from "typeorm";
 
 const router = Router();
 
@@ -8,10 +9,17 @@ const router = Router();
 router.get("/", async (req: Request, res: Response) => {
   try {
     // listar pacientes con paginacion
-    const { page = "1", limit = "10" } = req.query;
+    const { page = "1", limit = "10", nombre, apellido, cedula } = req.query;
     const [pacientes, total] = await AppDataSource.getRepository(
       Paciente
     ).findAndCount({
+      ...((nombre || apellido || cedula) && {
+        where: {
+          ...(nombre && { nombre: Like(`%${nombre}%`) }),
+          ...(apellido && { apellido: Like(`%${apellido}%`) }),
+          ...(cedula && { cedula: Like(`%${cedula}%`) }),
+        },
+      }),
       take: parseInt(limit as string),
       skip: (parseInt(page as string) - 1) * parseInt(limit as string),
       relations: ["antecedentes"],
