@@ -14,6 +14,7 @@ import { ESTATUS_CITA } from "shared/src/enums";
 import { ICita } from "shared/src/interfaces";
 import { DialogoCita } from "./DialogoCita";
 import { formatDate } from "shared/src/helpers";
+import { useNavigate, useNavigation } from "react-router-dom";
 
 // This type is used to define the shape of our data.
 export type Cita = Omit<
@@ -93,32 +94,23 @@ export const columns: ColumnDef<Cita>[] = [
     header: "Acciones",
     cell: ({ row }) => {
       const cita = row.original as ICita;
-      const { eliminarCita } = useCitasStore();
-      const [open, setOpen] = useState(false);
+      // const { eliminarCita } = useCitasStore();
+      // const [open, setOpen] = useState(false);
+      const navigate = useNavigate();
       return (
-        <>
+        <div className="flex gap-2">
           <Button
             variant="outline"
             className="border-blue-700 text-blue-700"
-            onClick={() => setOpen(true)}
+            onClick={() => {
+              navigate(`/consulta/${cita.id}`, {
+                state: { cita },
+              });
+            }}
           >
-            Actualizar
+            Consulta
           </Button>
-          <Button
-            variant="link"
-            className="text-red-400"
-            onClick={() => eliminarCita(cita)}
-          >
-            Eliminar
-          </Button>
-          <DialogoCita
-            accion="Actualizar"
-            cita={cita}
-            paciente={cita.paciente}
-            open={open}
-            onOpenChange={setOpen}
-          />
-        </>
+        </div>
       );
     },
   },
