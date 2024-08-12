@@ -67,6 +67,8 @@ export const columns: ColumnDef<Cita>[] = [
                   ? "yellow"
                   : estatus === ESTATUS_CITA.EN_CONSULTA
                   ? "cyan"
+                  : estatus === ESTATUS_CITA.FINALIZADA
+                  ? "lightsalmon"
                   : estatus === ESTATUS_CITA.CANCELADA
                   ? "lightgray"
                   : estatus === ESTATUS_CITA.PAGADA

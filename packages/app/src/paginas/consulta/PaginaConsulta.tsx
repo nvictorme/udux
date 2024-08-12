@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 export function PaginaConsulta() {
   const location = useLocation();
   const { cita } = location.state || {};
+
   return (
     <div>
       <ResizablePanelGroup direction="horizontal">

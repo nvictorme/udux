@@ -52,8 +52,11 @@ export function FormularioCita({
             id="fechaCita"
             type="date"
             className="col-span-3"
-            defaultValue={new Date().toISOString().split("T")[0]}
+            defaultValue={
+              cita?.fechaCita ?? new Date().toISOString().split("T")[0]
+            }
             {...register("fechaCita", { required: true })}
+            disabled={accion === "Actualizar"}
           />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
@@ -149,7 +152,7 @@ export function FormularioCita({
                 onValueChange={(value) => {
                   field.onChange(value);
                 }}
-                defaultValue={ESTATUS_CITA.EN_ESPERA}
+                defaultValue={cita?.estatus ?? ESTATUS_CITA.EN_ESPERA}
               >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="-" />
@@ -166,15 +169,15 @@ export function FormularioCita({
           />
         </div>
         <div className="self-center m-auto">
-          <Button
+          {/* <Button
             type="button"
             variant="link"
             className="text-red-400"
             onClick={onClose}
           >
             Cancelar
-          </Button>
-          <Button type="submit">{accion} Cita</Button>
+          </Button> */}
+          <Button type="submit">Guardar Cambios</Button>
         </div>
       </div>
     </form>
