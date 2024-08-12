@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formatDate = formatDate;
+exports.calcularEdad = calcularEdad;
 const date_fns_tz_1 = require("date-fns-tz");
 function formatDate(dateString) {
     // Define the time zone
@@ -9,4 +10,9 @@ function formatDate(dateString) {
     const utcDate = (0, date_fns_tz_1.fromZonedTime)(dateString, timeZone);
     // Format the date to 'dd/MM/yyyy' in the 'America/New_York' time zone
     return (0, date_fns_tz_1.format)(utcDate, "dd/MM/yyyy", { timeZone });
+}
+function calcularEdad(fechaNacimiento) {
+    const fechaNacimientoDate = new Date(fechaNacimiento);
+    const edad = new Date().getFullYear() - fechaNacimientoDate.getFullYear();
+    return edad;
 }

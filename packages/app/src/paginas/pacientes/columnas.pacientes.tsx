@@ -13,6 +13,7 @@ import {
 import { DialogoCita } from "../citas/DialogoCita";
 import { useState } from "react";
 import { DialogoPaciente } from "./DialogoPaciente";
+import { calcularEdad } from "shared/src/helpers";
 
 // This type is used to define the shape of our data.
 export type Paciente = Omit<
@@ -41,21 +42,13 @@ export const columns: ColumnDef<Paciente>[] = [
     header: "Apellido",
   },
   {
-    accessorKey: "cedula",
-    header: "Cédula",
-  },
-  {
     accessorKey: "genero",
     header: "Género",
   },
   {
     accessorKey: "fechaNacimiento",
     header: "Edad",
-    accessorFn: (paciente) => {
-      const fechaNacimiento = new Date(paciente.fechaNacimiento);
-      const edad = new Date().getFullYear() - fechaNacimiento.getFullYear();
-      return edad;
-    },
+    accessorFn: (paciente) => calcularEdad(paciente.fechaNacimiento),
   },
   {
     accessorKey: "estadoCivil",
@@ -68,6 +61,10 @@ export const columns: ColumnDef<Paciente>[] = [
   {
     accessorKey: "procedencia",
     header: "Procedencia",
+  },
+  {
+    accessorKey: "cedula",
+    header: "Cédula",
   },
   {
     id: "actions",

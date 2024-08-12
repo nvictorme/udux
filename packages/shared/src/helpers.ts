@@ -10,3 +10,9 @@ export function formatDate(dateString: string): string {
   // Format the date to 'dd/MM/yyyy' in the 'America/New_York' time zone
   return format(utcDate, "dd/MM/yyyy", { timeZone });
 }
+
+export function calcularEdad(fechaNacimiento: string): number {
+  const fechaNacimientoDate = new Date(fechaNacimiento);
+  const edad = new Date().getFullYear() - fechaNacimientoDate.getFullYear();
+  return edad;
+}
