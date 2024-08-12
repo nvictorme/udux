@@ -15,9 +15,7 @@ AppDataSource.initialize()
     const app = express();
 
     // CORS, JSON, Helmet, and Morgan middleware
-    const corsHandler = cors({
-      origin: "*",
-    });
+    const corsHandler = cors({ origin: true });
     app
       .use(corsHandler)
       .use(express.urlencoded({ extended: true }))
