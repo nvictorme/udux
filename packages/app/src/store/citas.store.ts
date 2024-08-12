@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { ICita } from "shared/src/interfaces";
 
-const API_BASE_URL = "http://localhost:3000";
+import { API_BASE_URL } from "@/config";
 
 // Define the shape of our store.
 export type CitasStore = {
