@@ -166,7 +166,12 @@ export function FormularioCita({
           />
         </div>
         <div className="self-center m-auto">
-          <Button type="button" variant="link" onClick={onClose}>
+          <Button
+            type="button"
+            variant="link"
+            className="text-red-400"
+            onClick={onClose}
+          >
             Cancelar
           </Button>
           <Button type="submit">{accion} Cita</Button>
