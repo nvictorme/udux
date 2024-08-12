@@ -11,27 +11,45 @@ export type PacientesStore = {
   page: number;
   limit: number;
   pageCount: number;
-  listarPacientes: () => void;
+  listarPacientes: ({
+    nombre,
+    apellido,
+    cedula,
+  }: {
+    nombre?: string;
+    apellido?: string;
+    cedula?: string;
+  }) => void;
   crearPaciente: (paciente: IPaciente) => void;
   actualizarPaciente: (paciente: IPaciente) => void;
   eliminarPaciente: (paciente: IPaciente) => void;
   setPage: (page: number) => void;
   setLimit: (limit: number) => void;
+  resetPacientes: () => void;
+};
+
+const initialState: Pick<
+  PacientesStore,
+  "pacientes" | "total" | "page" | "limit" | "pageCount"
+> = {
+  pacientes: [],
+  total: 0,
+  page: 1,
+  limit: 10,
+  pageCount: 1,
 };
 
 // Create a store with an initial state.
 export const usePacientesStore = create<PacientesStore>()(
   persist(
     (set, get): PacientesStore => ({
-      pacientes: [],
-      total: 0,
-      page: 1,
-      limit: 10,
-      pageCount: 1,
-      listarPacientes: async () => {
-        const response = await fetch(
-          `${API_BASE_URL}/pacientes?page=${get().page}&limit=${get().limit}`
-        );
+      ...initialState,
+      listarPacientes: async ({ nombre, apellido, cedula }) => {
+        let query = `?page=${get().page}&limit=${get().limit}`;
+        if (nombre) query += `&nombre=${nombre}`;
+        if (apellido) query += `&apellido=${apellido}`;
+        if (cedula) query += `&cedula=${cedula}`;
+        const response = await fetch(`${API_BASE_URL}/pacientes${query}`);
         const data = await response.json();
         set({ ...data });
       },
@@ -77,11 +95,15 @@ export const usePacientesStore = create<PacientesStore>()(
       },
       setPage: (page) => {
         set({ page });
-        get().listarPacientes();
+        get().listarPacientes({});
       },
       setLimit: (limit) => {
         set({ limit });
-        get().listarPacientes();
+        get().listarPacientes({});
+      },
+      resetPacientes: () => {
+        set({ ...initialState });
+        get().listarPacientes({});
       },
     }),
     {

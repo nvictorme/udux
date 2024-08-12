@@ -29,13 +29,7 @@ export function FormularioCita({
   onClose,
 }: FormularioCitaProps) {
   const { crearCita, actualizarCita } = useCitasStore();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    control,
-    formState: { errors },
-  } = useForm<ICita>({
+  const { register, handleSubmit, control } = useForm<ICita>({
     ...(cita && { defaultValues: cita }),
   });
   const onSubmit: SubmitHandler<ICita> = (data) => {

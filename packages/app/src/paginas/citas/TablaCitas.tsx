@@ -1,4 +1,4 @@
-import { DataTabTable } from "@/components/DataTable";
+import { DataTable } from "@/components/DataTable";
 import { columns, Cita } from "./columnas.citas";
 import { useEffect } from "react";
 import { useCitasStore } from "@/store/citas.store";
@@ -13,7 +13,7 @@ export function TablaCitas() {
   return (
     <>
       <div>
-        <DataTabTable
+        <DataTable
           columns={columns}
           data={citas as Cita[]}
           page={page}
