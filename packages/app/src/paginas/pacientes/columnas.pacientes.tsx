@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { IPaciente } from "shared/src/interfaces";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, PlusCircle, Edit } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -86,14 +86,15 @@ export const columns: ColumnDef<Paciente>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => setDialogoCitaOpen(true)}>
-                + Cita
+                <PlusCircle className="mr-2 h-4 w-4" /> Cita
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Antecedentes</DropdownMenuItem>
               <DropdownMenuItem>Informes</DropdownMenuItem>
+              <DropdownMenuItem>Citas</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => setDialogoPacienteOpen(true)}>
-                Actualizar
+                <Edit className="mr-2 h-4 w-4" /> Actualizar
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

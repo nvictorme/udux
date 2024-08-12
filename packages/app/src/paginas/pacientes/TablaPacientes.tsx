@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { DialogoPaciente } from "./DialogoPaciente";
 import { Button } from "@/components/ui/button";
 import { BuscarPaciente } from "./BuscarPaciente";
+import { PlusCircle } from "lucide-react";
 
 export function TablaPacientes() {
   const { pacientes, listarPacientes, page, pageCount, setPage } =
@@ -27,7 +28,7 @@ export function TablaPacientes() {
       >
         <BuscarPaciente />
         <Button variant="default" onClick={() => setOpen(true)}>
-          + Paciente
+          <PlusCircle className="mr-2 h-4 w-4" /> Crear
         </Button>
         <DialogoPaciente accion="Crear" open={open} onOpenChange={setOpen} />
       </div>

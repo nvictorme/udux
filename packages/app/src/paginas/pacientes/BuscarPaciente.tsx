@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Search, RotateCcw } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -38,13 +39,14 @@ export function BuscarPaciente() {
     <>
       {showReset ? (
         <Button type="button" variant="outline" onClick={onReset}>
-          Limpiar búsqueda
+          <RotateCcw className="mr-2 h-4 w-4" />
+          Reset
         </Button>
       ) : null}
       <Popover>
         <PopoverTrigger asChild>
           <Button type="button" variant="outline">
-            Buscar paciente
+            <Search className="mr-2 h-4 w-4" /> Buscar
           </Button>
         </PopoverTrigger>
         <PopoverContent>
