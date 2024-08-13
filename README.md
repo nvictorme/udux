@@ -15,7 +15,8 @@ El repositorio está estructurado en los siguientes directorios:
 ## Requisitos
 
 - Node.js >= 20 (recomendado)
-- pm2 (requerido)
+- [serve](https://www.npmjs.com/package/serve) (requerido)
+- [pm2](https://www.npmjs.com/package/pm2) (requerido)
 
 ## Configuración
 
