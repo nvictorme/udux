@@ -55,16 +55,6 @@ export function FormularioPaciente({
           />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="apellido" className="text-right">
-            Apellido
-          </Label>
-          <Input
-            id="apellido"
-            className="col-span-3"
-            {...register("apellido", { required: true, maxLength: 100 })}
-          />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="genero" className="text-right">
             Género
           </Label>

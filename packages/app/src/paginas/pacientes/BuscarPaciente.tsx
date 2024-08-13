@@ -15,12 +15,10 @@ export function BuscarPaciente() {
   const { listarPacientes, setPage, resetPacientes } = usePacientesStore();
   const { register, handleSubmit, watch } = useForm<{
     nombre: string;
-    apellido: string;
     cedula: string;
   }>();
   const onSubmit: SubmitHandler<{
     nombre: string;
-    apellido: string;
     cedula: string;
   }> = (data) => {
     setPage(1);
@@ -32,9 +30,8 @@ export function BuscarPaciente() {
     setShowReset(false);
   }, [resetPacientes]);
   const nombre = watch("nombre");
-  const apellido = watch("apellido");
   const cedula = watch("cedula");
-  const disabled = !nombre && !apellido && !cedula;
+  const disabled = !nombre && !cedula;
   return (
     <>
       {showReset ? (
@@ -53,7 +50,6 @@ export function BuscarPaciente() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-4">
               <Input placeholder="Nombre" {...register("nombre")} />
-              <Input placeholder="Apellido" {...register("apellido")} />
               <Input placeholder="Cédula" {...register("cedula")} />
               <Button variant="secondary" type="submit" disabled={disabled}>
                 Buscar

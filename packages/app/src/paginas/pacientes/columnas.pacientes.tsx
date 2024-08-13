@@ -39,10 +39,6 @@ export const columns: ColumnDef<Paciente>[] = [
     header: "Nombre",
   },
   {
-    accessorKey: "apellido",
-    header: "Apellido",
-  },
-  {
     accessorKey: "genero",
     header: "Género",
   },
