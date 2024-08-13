@@ -20,7 +20,7 @@
     "build": "lerna run build",
     "dev": "lerna run dev",
     "serve": "lerna run serve",
-    "start": "lerna run start",
+    "start": "lerna run start && pm2 link x82663zgn8kymfk 7u9g1x2o1wnpxi8",
     "reload": "pm2 reload all",
     "stop": "pm2 stop all",
     "test": "lerna run test",
