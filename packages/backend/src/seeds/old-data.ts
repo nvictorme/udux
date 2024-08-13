@@ -4,7 +4,6 @@ import { IPaciente, IAntecedentes, ICita } from "shared/src/interfaces";
 import { GENERO, ESTATUS_CITA } from "shared/src/enums";
 import { Paciente } from "../entity/Paciente";
 import { Cita } from "../entity/Cita";
-import { writeFileSync } from "fs";
 
 // sanitize any string by removing html tags
 // also removing any new lines, carriage returns, tabs
