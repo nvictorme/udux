@@ -4,26 +4,15 @@ import { IPaciente, IAntecedentes, ICita } from "shared/src/interfaces";
 import { GENERO, ESTATUS_CITA } from "shared/src/enums";
 import { Paciente } from "../entity/Paciente";
 import { Cita } from "../entity/Cita";
-
-// sanitize any string by removing html tags
-// also removing any new lines, carriage returns, tabs
-// and trimming it
-function sanitizeString(str: string): string {
-  if (!str) return "";
-  return str
-    .replace(/<[^>]*>?/gm, "")
-    .replace(/\r?\n|\r/g, "")
-    .replace(/\t/g, "")
-    .trim();
-}
+import { sanitizeNumber, sanitizeString } from "shared/src/helpers";
 
 async function run(): Promise<void> {
   await AppDataSource.initialize();
   const connection = await mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "password",
-    database: "database",
+    password: "",
+    database: "udu",
   });
   console.log("Connected to MySQL");
 
@@ -49,7 +38,7 @@ async function run(): Promise<void> {
     const paciente = {
       id: row.id_paciente,
       nombre: sanitizeString(row.nombre),
-      cedula: row.ci_rif,
+      cedula: sanitizeNumber(row.ci_rif),
       fechaNacimiento: row.fecha_nacimiento,
       genero: GENERO.OTRO,
       estadoCivil: row.desc_estado,
@@ -65,7 +54,7 @@ async function run(): Promise<void> {
         actividadFisica: sanitizeString(row.act_fisica),
         paciente: { id: row.id_paciente } as IPaciente,
       } as IAntecedentes,
-    } as IPaciente;
+    } as unknown as IPaciente;
 
     pacientes.push(paciente);
   }

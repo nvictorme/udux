@@ -1,4 +1,11 @@
-import { Entity, Column, OneToMany, OneToOne } from "typeorm";
+import {
+  Entity,
+  Column,
+  OneToMany,
+  OneToOne,
+  BeforeInsert,
+  BeforeUpdate,
+} from "typeorm";
 import { Base } from "./Base";
 import {
   IAntecedentes,
@@ -10,6 +17,7 @@ import { GENERO, ESTADO_CIVIL } from "shared/src/enums";
 import { Informe } from "./Informe";
 import { Antecedentes } from "./Antecedentes";
 import { Cita } from "./Cita";
+import { sanitizeNumber, sanitizeString } from "shared/src/helpers";
 
 @Entity("pacientes")
 export class Paciente extends Base implements IPaciente {
@@ -24,6 +32,13 @@ export class Paciente extends Base implements IPaciente {
   })
   genero: GENERO;
 
+  @BeforeInsert()
+  @BeforeUpdate()
+  sanitizeCedula() {
+    if (this.cedula) {
+      this.cedula = this.cedula.replace(/\D/g, "").trim();
+    }
+  }
   @Column({ type: "varchar", length: 20, nullable: true })
   cedula: string;
 

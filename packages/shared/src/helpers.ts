@@ -16,3 +16,23 @@ export function calcularEdad(fechaNacimiento: string): number {
   const edad = new Date().getFullYear() - fechaNacimientoDate.getFullYear();
   return edad;
 }
+
+// sanitize any string by removing html tags
+// also removing any new lines, carriage returns, tabs
+// and trimming it
+export function sanitizeString(str: string): string {
+  if (!str) return "";
+  return str
+    .replace(/<[^>]*>?/gm, "")
+    .replace(/\r?\n|\r/g, "")
+    .replace(/\t/g, "")
+    .trim();
+}
+
+// sanitize any string allowing only numbers
+// if it's NaN it will return null
+export function sanitizeNumber(str: string): number | null {
+  if (!str) return null;
+  const num = parseInt(str.replace(/\D/g, ""), 10);
+  return isNaN(num) ? null : num;
+}
