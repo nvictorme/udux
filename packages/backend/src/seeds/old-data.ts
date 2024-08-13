@@ -22,8 +22,8 @@ async function run(): Promise<void> {
   const connection = await mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "BadBunny2023$",
-    database: "udu",
+    password: "password",
+    database: "database",
   });
   console.log("Connected to MySQL");
 
