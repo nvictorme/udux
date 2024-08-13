@@ -1,4 +1,4 @@
-# UDUx - monorepo del sistema de gestión de pacientes UDU
+# UDUx - monorepo del sistema de gestión de pacientes
 
 ## Descripción
 
