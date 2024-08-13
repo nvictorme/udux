@@ -80,43 +80,33 @@ export function PaginaConsulta() {
                 <span>{paciente.nombre}</span>
               </p>
               <p>
-                <span className="font-light text-sm">Cédula:</span>
-                <br />
-                {paciente.cedula}
-              </p>
-            </div>
-            <div className="col-span-2 gap-2 flex flex-col">
-              <p>
-                <span className="font-light text-sm">Género:</span>
-                <br />
-                {paciente.genero}
-              </p>
-              <p>
                 <span className="font-light text-sm">Edad:</span>
                 <br />
                 {calcularEdad(paciente.fechaNacimiento)}
               </p>
+            </div>
+            <div className="col-span-2 gap-2 flex flex-col">
               <p>
                 <span className="font-light text-sm">Estado civil:</span>
                 <br />
                 {paciente.estadoCivil}
               </p>
-            </div>
-            <div className="col-span-2 gap-2 flex flex-col">
               <p>
                 <span className="font-light text-sm">Profesión:</span>
                 <br />
                 {paciente.profesion}
               </p>
+            </div>
+            <div className="col-span-2 gap-2 flex flex-col">
+              <p>
+                <span className="font-light text-sm">Cédula:</span>
+                <br />
+                {paciente.cedula}
+              </p>
               <p>
                 <span className="font-light text-sm">Procedencia:</span>
                 <br />
                 {paciente.procedencia}
-              </p>
-              <p>
-                <span className="font-light text-sm">Teléfono:</span>
-                <br />
-                {paciente.telefono}
               </p>
             </div>
           </div>
