@@ -2,7 +2,6 @@ import { Router, Request, Response } from "express";
 import { Paciente } from "../entity/Paciente";
 import { AppDataSource } from "../data-source";
 import { Like } from "typeorm";
-import { Antecedentes } from "../entity/Antecedentes";
 
 const router = Router();
 

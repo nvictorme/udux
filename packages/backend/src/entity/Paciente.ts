@@ -17,7 +17,6 @@ import { GENERO, ESTADO_CIVIL } from "shared/src/enums";
 import { Informe } from "./Informe";
 import { Antecedentes } from "./Antecedentes";
 import { Cita } from "./Cita";
-import { sanitizeNumber, sanitizeString } from "shared/src/helpers";
 
 @Entity("pacientes")
 export class Paciente extends Base implements IPaciente {

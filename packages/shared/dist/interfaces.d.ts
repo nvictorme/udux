@@ -4,6 +4,11 @@ export interface IBase {
     fechaCreado: string;
     fechaModificado: string;
 }
+export interface IUsuario extends IBase {
+    nombre: string;
+    email: string;
+    password: string;
+}
 export interface IPaciente extends IBase {
     nombre: string;
     genero: GENERO;

@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 
+import AuthRoutes from "./routes/auth.routes";
 import PacientesRoutes from "./routes/pacientes.routes";
 import CitasRoutes from "./routes/citas.routes";
 import AntecedentesRoutes from "./routes/antecedentes.routes";
@@ -23,6 +24,7 @@ AppDataSource.initialize()
       .use(morgan("combined"));
 
     // Define a route handler
+    app.use("/auth", AuthRoutes);
     app.use("/pacientes", PacientesRoutes);
     app.use("/citas", CitasRoutes);
     app.use("/antecedentes", AntecedentesRoutes);
