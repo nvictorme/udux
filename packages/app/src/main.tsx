@@ -7,17 +7,35 @@ import App from "./App.tsx";
 
 import "./index.css";
 import { PaginaConsulta } from "./paginas/consulta/PaginaConsulta";
+import { ProtectedRoute } from "./ProtectedRoute.tsx";
+import { RegisterPage } from "./paginas/auth/RegisterPage.tsx";
 
 export default App;
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <ProtectedRoute>
+        <App />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/consulta/:id",
-    element: <PaginaConsulta />,
+    element: (
+      <ProtectedRoute>
+        <PaginaConsulta />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/auth/crear-usuario",
+    element: (
+      <ProtectedRoute>
+        <RegisterPage />
+      </ProtectedRoute>
+    ),
   },
 ]);
 
