@@ -21,7 +21,9 @@ const shouldRefreshToken = (configUrl: string) => {
 };
 
 const refreshTokens = async (refreshToken: string): Promise<ITokens> => {
-  const { data: tokens } = await new ApiClient().post("/auth/refresh", {
+  const {
+    data: { tokens },
+  } = await new ApiClient().post("/auth/refresh", {
     refreshToken,
   });
   return tokens;
