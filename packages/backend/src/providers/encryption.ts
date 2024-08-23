@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { createHmac, createHash } from "crypto";
+import { ITokens } from "shared/src/interfaces";
 
 export const isValidPassword = (password: string) => {
   return /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/i.test(
@@ -49,11 +50,6 @@ export const verifyRefreshToken = (token: string) => {
 export const verifyResetToken = (token: string) => {
   return jwt.verify(token, process.env.JWT_RESET_SECRET ?? "super_secret");
 };
-
-export interface ITokens {
-  accessToken: string;
-  refreshToken: string;
-}
 
 export const deriveTokens = (user: any): ITokens => {
   if (!user) throw new Error("missing user");

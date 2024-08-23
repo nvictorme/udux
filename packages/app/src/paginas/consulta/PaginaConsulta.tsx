@@ -18,7 +18,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ICita } from "shared/src/interfaces";
-import { API_BASE_URL } from "@/config";
+import { ApiClient } from "@/api/api.client";
 
 export function PaginaConsulta() {
   // Local state.
@@ -65,9 +65,9 @@ export function PaginaConsulta() {
       if (paciente.antecedentes) {
         fetchAntecedente(paciente.antecedentes.id);
       }
-      fetch(`${API_BASE_URL}/citas/paciente/${paciente.id}`)
-        .then((res) => res.json())
-        .then((data) =>
+      new ApiClient()
+        .get(`/citas/paciente/${paciente.id}`, {})
+        .then(({ data }) =>
           setCitas(data.citas.filter((c: ICita) => c.id !== citaId))
         );
     }
