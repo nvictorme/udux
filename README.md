@@ -20,9 +20,9 @@ El repositorio está estructurado en los siguientes directorios:
 
 ## Configuración
 
-1. Desde el directorio `backend`, ejecutar `npm run migration:run` para inicializar la base de datos.
-2. Desde el directorio `backend`, ejecutar `npm run seed:old-data` para migrar los datos de la base de datos antigua a la nueva.
-3. Editar el archivo `app/src/config.ts` y cambiar la variable `API_URL` por la URL del MagicDNS de Tailscale que apunta al backend o por localhost si se está ejecutando en local.
+1. Desde el directorio `packages/backend`, ejecutar `npm run migration:run` para inicializar la base de datos.
+2. Desde el directorio `packages/backend`, ejecutar `npm run seed:old-data` para migrar los datos de la base de datos antigua a la nueva.
+3. Editar el archivo `packages/app/src/api/api.client.ts` y cambiar la variable `API_BASE_URL` por la URL del servidor que apunta al backend o por localhost si se está ejecutando en local.
 
 ## Instalación
 

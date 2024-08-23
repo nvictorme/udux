@@ -10,21 +10,31 @@ import CitasRoutes from "./routes/citas.routes";
 import AntecedentesRoutes from "./routes/antecedentes.routes";
 import InformesRoutes from "./routes/informes.routes";
 
+import Auth from "./middleware/auth.middleware";
+
 AppDataSource.initialize()
   .then(async () => {
     // Create a new express application instance
     const app = express();
 
     // CORS, JSON, Helmet, and Morgan middleware
-    const corsHandler = cors({ origin: true });
+    const corsHandler = cors({
+      origin: true,
+      allowedHeaders: ["Content-Type", "Authorization"],
+      methods: ["GET", "POST", "PUT", "DELETE"],
+    });
     app
       .use(corsHandler)
       .use(express.urlencoded({ extended: true }))
       .use(express.json())
       .use(morgan("combined"));
 
-    // Define a route handler
+    // Auth routes
     app.use("/auth", AuthRoutes);
+
+    // Put all other routes behind JWT Auth
+    app.use(Auth.authenticate("jwt", { session: false }));
+    // Route handler
     app.use("/pacientes", PacientesRoutes);
     app.use("/citas", CitasRoutes);
     app.use("/antecedentes", AntecedentesRoutes);

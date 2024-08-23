@@ -1,6 +1,9 @@
 import { Router, Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { Usuario } from "../entity/Usuario";
+import { ITokens } from "shared/src/interfaces";
+
+import { deriveTokens, verifyRefreshToken } from "../providers/encryption";
 
 import Auth from "../middleware/auth.middleware";
 
@@ -12,7 +15,9 @@ router.post(
   Auth.authenticate("local", { session: false }),
   (req: Request, res: Response) => {
     try {
-      res.status(200).json({ user: req.user });
+      const user = req.user as Usuario;
+      const tokens = deriveTokens(user);
+      res.status(200).json({ tokens });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
@@ -31,9 +36,23 @@ router.post("/register", async (req: Request, res: Response) => {
 
     const user = await AppDataSource.getRepository(Usuario).save(newUser);
 
-    res.status(201).json({ user });
+    const tokens = deriveTokens(user);
+    res.status(201).json({ tokens });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+// POST /auth/refresh
+router.post("/refresh", async (req: Request, res: Response) => {
+  try {
+    const { refreshToken } = req.body;
+    const payload = verifyRefreshToken(refreshToken) as any;
+    const user = payload.user as Usuario;
+    const tokens: ITokens = deriveTokens(user);
+    res.status(201).json({ tokens });
+  } catch (error: any) {
+    res.status(403).json({ error: error.message });
   }
 });
 

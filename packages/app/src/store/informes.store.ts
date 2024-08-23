@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { IInforme } from "shared/src/interfaces";
 
-import { API_BASE_URL } from "@/config";
+import { ApiClient } from "@/api/api.client";
 
 // Define the shape of our store.
 export type InformesStore = {
@@ -19,39 +19,28 @@ export const useInformesStore = create<InformesStore>()(
     (set, get): InformesStore => ({
       informes: [],
       listarInformes: async () => {
-        const response = await fetch(`${API_BASE_URL}/informes`);
-        const informes = await response.json();
-        set({ informes });
+        const { data } = await new ApiClient().get(`/informes`, {});
+        set({ informes: data.informes });
       },
       crearInforme: async (informe) => {
-        const response = await fetch(`${API_BASE_URL}/informes`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(informe),
-        });
-        const data = await response.json();
+        const { data } = await new ApiClient().post(`/informes`, informe);
         set({ informes: [...get().informes, data.informe] });
       },
       actualizarInforme: async (informe) => {
-        const response = await fetch(`${API_BASE_URL}/informes/${informe.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(informe),
-        });
-        const data = await response.json();
+        const { data } = await new ApiClient().put(
+          `/informes/${informe.id}`,
+          informe
+        );
         const informes = get().informes.map((i) =>
           i.id === data.informe.id ? data.informe : i
         );
         set({ informes });
       },
       eliminarInforme: async (informe) => {
-        const response = await fetch(`${API_BASE_URL}/informes/${informe.id}`, {
-          method: "DELETE",
-        });
+        const response = await new ApiClient().delete(
+          `/informes/${informe.id}`,
+          {}
+        );
         if (response.status === 204) {
           const informes = get().informes.filter((i) => i.id !== informe.id);
           set({ informes });

@@ -56,3 +56,14 @@ export interface IInforme extends IBase {
   informe: string;
   observaciones: string;
 }
+
+export interface ITokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface IDecodedToken {
+  user: IUsuario;
+  iat: number;
+  exp: number;
+}

@@ -1,8 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { ICita } from "shared/src/interfaces";
-
-import { API_BASE_URL } from "@/config";
+import { ApiClient } from "@/api/api.client";
 
 // Define the shape of our store.
 export type CitasStore = {
@@ -41,46 +40,29 @@ export const useCitasStore = create<CitasStore>()(
     (set, get): CitasStore => ({
       ...initialState,
       listarCitas: async () => {
-        const response = await fetch(
-          `${API_BASE_URL}/citas?page=${get().page}&limit=${get().limit}`
+        const { data } = await new ApiClient().get(
+          `/citas?page=${get().page}&limit=${get().limit}`,
+          {}
         );
-        const data = await response.json();
         set({ ...data });
       },
       fetchCita: async (id) => {
-        const response = await fetch(`${API_BASE_URL}/citas/${id}`);
-        const data = await response.json();
+        const { data } = await new ApiClient().get(`/citas/${id}`, {});
         set({ cita: data.cita });
       },
       crearCita: async (cita) => {
-        const response = await fetch(`${API_BASE_URL}/citas`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(cita),
-        });
-        const data = await response.json();
+        const { data } = await new ApiClient().post(`/citas`, cita);
         set({ citas: [...get().citas, data.cita] });
       },
       actualizarCita: async (cita) => {
-        const response = await fetch(`${API_BASE_URL}/citas/${cita.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(cita),
-        });
-        const data = await response.json();
+        const { data } = await new ApiClient().put(`/citas/${cita.id}`, cita);
         const citas = get().citas.map((c) =>
           c.id === data.cita.id ? data.cita : c
         );
         set({ citas });
       },
       eliminarCita: async (cita) => {
-        const response = await fetch(`${API_BASE_URL}/citas/${cita.id}`, {
-          method: "DELETE",
-        });
+        const response = await new ApiClient().delete(`/citas/${cita.id}`, {});
         if (response.status === 204) {
           const citas = get().citas.filter((c) => c.id !== cita.id);
           set({ citas });

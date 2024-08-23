@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { IPaciente } from "shared/src/interfaces";
 
-import { API_BASE_URL } from "@/config";
+import { ApiClient } from "@/api/api.client";
 
 // Define the shape of our store.
 export type PacientesStore = {
@@ -47,52 +47,36 @@ export const usePacientesStore = create<PacientesStore>()(
     (set, get): PacientesStore => ({
       ...initialState,
       listarPacientes: async ({ nombre, cedula }) => {
-        let query = `?page=${get().page}&limit=${get().limit}`;
-        if (nombre) query += `&nombre=${nombre}`;
-        if (cedula) query += `&cedula=${cedula}`;
-        const response = await fetch(`${API_BASE_URL}/pacientes${query}`);
-        const data = await response.json();
+        const { data } = await new ApiClient().get(`/pacientes`, {
+          page: get().page,
+          limit: get().limit,
+          ...(nombre && { nombre }),
+          ...(cedula && { cedula }),
+        });
         set({ ...data });
       },
       fetchPaciente: async (id) => {
-        const response = await fetch(`${API_BASE_URL}/pacientes/${id}`);
-        const data = await response.json();
+        const { data } = await new ApiClient().get(`/pacientes/${id}`, {});
         set({ paciente: data.paciente });
       },
       crearPaciente: async (paciente) => {
-        const response = await fetch(`${API_BASE_URL}/pacientes`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(paciente),
-        });
-        const data = await response.json();
+        const { data } = await new ApiClient().post(`/pacientes`, paciente);
         set({ pacientes: [data.paciente, ...get().pacientes] });
       },
       actualizarPaciente: async (paciente) => {
-        const response = await fetch(
-          `${API_BASE_URL}/pacientes/${paciente.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(paciente),
-          }
+        const { data } = await new ApiClient().put(
+          `/pacientes/${paciente.id}`,
+          paciente
         );
-        const data = await response.json();
         const pacientes = get().pacientes.map((p) =>
           p.id === data.paciente.id ? data.paciente : p
         );
         set({ pacientes, paciente: data.paciente });
       },
       eliminarPaciente: async (paciente) => {
-        const response = await fetch(
-          `${API_BASE_URL}/pacientes/${paciente.id}`,
-          {
-            method: "DELETE",
-          }
+        const response = await new ApiClient().delete(
+          `/pacientes/${paciente.id}`,
+          {}
         );
         if (response.status === 204) {
           const pacientes = get().pacientes.filter((p) => p.id !== paciente.id);
