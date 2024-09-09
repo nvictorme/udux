@@ -84,12 +84,12 @@ export function PaginaConsulta() {
   return (
     <div>
       {/* Paciente */}
-      <Card className="p-4">
+      <Card className="p-4 bg-[#7ffeff4f]">
         <CardTitle>
           <h1 className="text-2xl">Paciente</h1>
         </CardTitle>
         <CardContent className="my-4">
-          <div className="grid grid-cols-6 gap-4 text-xl">
+          <div className="grid grid-cols-6 gap-4 text-xl ">
             <div className="col-span-2 flex flex-col gap-2">
               <p>
                 <span className="font-light text-sm">Nombre:</span>
@@ -134,42 +134,40 @@ export function PaginaConsulta() {
       </Card>
 
       {/* Antecedentes */}
-      <Card className="p-4 my-4">
+      <Card className="p-4 my-4 bg-[#82ef93c2]">
         <CardTitle>
           <h1 className="text-2xl">Antecedentes</h1>
         </CardTitle>
         <CardContent>
           {antecedente ? (
-            <div className="grid grid-cols-6 gap-1 text-xl">
-              <div className="col-span-2 flex flex-col gap-2">
-                <p>
-                  <span className="font-light text-sm">Médicos:</span>
-                  <br />
-                  <i>{antecedente.medicos}</i>
-                </p>
-              </div>
-              <div className="col-span-2 flex flex-col gap-2">
-                <p>
-                  <span className="font-light text-sm">Quirúrgicos:</span>
-                  <br />
-                  <i>{antecedente.quirurgicos}</i>
-                </p>
-              </div>
-              <div className="col-span-2 flex flex-col gap-2">
-                <p>
-                  <span className="font-light text-sm">Familiares:</span>
-                  <br />
-                  <i>{antecedente.habitos}</i>
-                </p>
-              </div>
-              <div className="col-span-2 flex flex-col gap-2">
-                <p>
-                  <span className="font-light text-sm">Actividad física:</span>
-                  <br />
-                  <i>{antecedente.actividadFisica}</i>
-                </p>
-              </div>
-            </div>
+            <table className="table-auto w-full text-xl border border-collapse border-gray-400">
+              <tbody>
+                <tr className="border border-collapse border-gray-400">
+                  <td className="font-semibold text-xl">Médicos</td>
+                  <td>
+                    <i>{antecedente.medicos}</i>
+                  </td>
+                </tr>
+                <tr className="border border-collapse border-gray-400">
+                  <td className="font-semibold text-xl">Quirúrgicos</td>
+                  <td>
+                    <i>{antecedente.quirurgicos}</i>
+                  </td>
+                </tr>
+                <tr className="border border-collapse border-gray-400">
+                  <td className="font-semibold text-xl">Familiares</td>
+                  <td>
+                    <i>{antecedente.habitos}</i>
+                  </td>
+                </tr>
+                <tr className="border border-collapse border-gray-400">
+                  <td className="font-semibold text-xl">Actividad física</td>
+                  <td>
+                    <i>{antecedente.actividadFisica}</i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           ) : null}
         </CardContent>
         <Button variant="secondary" onClick={() => setOpenAntecedentes(true)}>
@@ -178,7 +176,7 @@ export function PaginaConsulta() {
       </Card>
 
       {/* Historial de consultas */}
-      <Card className="p-4">
+      <Card className="p-4 my-4 bg-[#f8f8c7]">
         <CardTitle>
           <h1 className="text-2xl">Historial de consultas</h1>
         </CardTitle>
@@ -262,7 +260,7 @@ export function PaginaConsulta() {
       </Card>
 
       {/* Consulta */}
-      <Card className="p-4">
+      <Card className="p-4 bg-[#afaff77a]">
         <CardTitle>
           <h1 className="text-2xl">Consulta</h1>
         </CardTitle>

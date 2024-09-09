@@ -1,7 +1,7 @@
 import { AppDataSource } from "../data-source";
 import mysql from "mysql2/promise";
 import { IPaciente, IAntecedentes, ICita } from "shared/src/interfaces";
-import { GENERO, ESTATUS_CITA } from "shared/src/enums";
+import { GENERO, ESTATUS_CITA, ESTADO_CIVIL } from "shared/src/enums";
 import { Paciente } from "../entity/Paciente";
 import { Cita } from "../entity/Cita";
 import { sanitizeNumber, sanitizeString } from "shared/src/helpers";
@@ -41,7 +41,13 @@ async function run(): Promise<void> {
       cedula: sanitizeNumber(row.ci_rif),
       fechaNacimiento: row.fecha_nacimiento,
       genero: GENERO.OTRO,
-      estadoCivil: row.desc_estado,
+      estadoCivil:
+        ESTADO_CIVIL[
+          `${
+            (row.desc_estado?.toUpperCase() as keyof typeof ESTADO_CIVIL) ??
+            "SOLTERO"
+          }`
+        ],
       telefono: sanitizeString(row.telefono),
       direccion: sanitizeString(row.direccion),
       email: sanitizeString(row.email),
