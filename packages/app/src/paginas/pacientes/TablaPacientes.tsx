@@ -30,7 +30,12 @@ export function TablaPacientes() {
         <Button variant="default" onClick={() => setOpen(true)}>
           <PlusCircle className="mr-2 h-4 w-4" /> Crear
         </Button>
-        <DialogoPaciente accion="Crear" open={open} onOpenChange={setOpen} />
+        <DialogoPaciente
+          accion="Crear"
+          open={open}
+          onOpenChange={setOpen}
+          paciente={null}
+        />
       </div>
       <DataTable
         columns={columns}

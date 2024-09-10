@@ -8,7 +8,7 @@ import { IAntecedentes, IPaciente } from "shared/src/interfaces";
 
 interface FormularioAntecedentesProps {
   accion: "Crear" | "Actualizar";
-  paciente: IPaciente;
+  paciente: IPaciente | null;
   antecedentes: IAntecedentes | null;
   onClose?: () => void;
 }
@@ -25,6 +25,7 @@ export function FormularioAntecedentes({
     ...(antecedentes && { defaultValues: antecedentes }),
   });
   const onSubmit: SubmitHandler<IAntecedentes> = (data) => {
+    if (!paciente) return;
     if (accion === "Crear") {
       crearAntecedente({ ...data, paciente });
     } else {

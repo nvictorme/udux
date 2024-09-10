@@ -61,7 +61,10 @@ export const usePacientesStore = create<PacientesStore>()(
       },
       crearPaciente: async (paciente) => {
         const { data } = await new ApiClient().post(`/pacientes`, paciente);
-        set({ pacientes: [data.paciente, ...get().pacientes] });
+        set({
+          pacientes: [data.paciente, ...get().pacientes],
+          paciente: data.paciente,
+        });
       },
       actualizarPaciente: async (paciente) => {
         const { data } = await new ApiClient().put(

@@ -11,7 +11,7 @@ import { useCallback } from "react";
 
 interface DialogoPacienteProps {
   accion: "Crear" | "Actualizar";
-  paciente?: IPaciente;
+  paciente: IPaciente | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }

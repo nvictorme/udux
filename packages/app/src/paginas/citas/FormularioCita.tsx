@@ -17,8 +17,8 @@ import { useCitasStore } from "@/store/citas.store";
 
 interface FormularioCitaProps {
   accion: "Crear" | "Actualizar";
-  paciente: IPaciente;
-  cita?: ICita;
+  paciente: IPaciente | null;
+  cita: ICita | null;
   onClose?: () => void;
 }
 
@@ -34,7 +34,7 @@ export function FormularioCita({
   });
   const onSubmit: SubmitHandler<ICita> = (data) => {
     if (accion === "Crear") {
-      crearCita({ ...data, paciente });
+      if (paciente) crearCita({ ...data, paciente });
     } else {
       actualizarCita(data);
     }

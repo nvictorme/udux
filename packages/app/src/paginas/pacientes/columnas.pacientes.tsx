@@ -98,6 +98,7 @@ export const columns: ColumnDef<Paciente>[] = [
           <DialogoCita
             accion="Crear"
             paciente={paciente}
+            cita={null}
             open={openCita}
             onOpenChange={setOpenCita}
           />
