@@ -246,7 +246,7 @@ export default function PatientLayout() {
                     <PlusIcon className="mr-2 h-4 w-4" /> Nueva Consulta
                   </Button>
                 </div>
-                <table className="w-full border-collapse border border-gray-300 bg-[#f8f8c7]">
+                <table className="w-full border-collapse border border-gray-300 bg-[#f7edc5]">
                   <thead>
                     <tr>
                       <th className="border border-gray-300 p-2">Fecha</th>
