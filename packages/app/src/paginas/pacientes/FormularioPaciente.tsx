@@ -17,7 +17,7 @@ import { usePacientesStore } from "@/store/pacientes.store";
 
 interface FormularioPacienteProps {
   accion: "Crear" | "Actualizar";
-  paciente?: IPaciente;
+  paciente: IPaciente | null;
   onClose?: () => void;
 }
 

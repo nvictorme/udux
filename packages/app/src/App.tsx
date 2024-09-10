@@ -22,19 +22,21 @@ import { DialogoPaciente } from "./paginas/pacientes/DialogoPaciente";
 import { DialogoAntecedentes } from "./paginas/antecedentes/DialogoAntecedentes";
 import { DialogoCita } from "./paginas/citas/DialogoCita";
 import { ICita } from "shared/src/interfaces";
+import { ApiClient } from "./api/api.client";
 
 export default function PatientLayout() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const [leftPanelWidth, setLeftPanelWidth] = useState(30);
-  const containerRef = useRef(null);
-  const dividerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
 
   const [openPaciente, setOpenPaciente] = useState(false);
   const [openAnt, setOpenAnt] = useState(false);
   const [openCita, setOpenCita] = useState(false);
 
   const [cita, setCita] = useState<ICita | null>(null);
+  const [citas, setCitas] = useState<ICita[]>([]);
 
   const { pacientes, paciente, resetPaciente, listarPacientes } =
     usePacientesStore();
@@ -46,6 +48,15 @@ export default function PatientLayout() {
     listarPacientes({ cedula: value });
   };
 
+  // Fetch citas when paciente is selected or when openCita changes state
+  useEffect(() => {
+    if (paciente && !openCita) {
+      new ApiClient()
+        .get(`/citas/paciente/${paciente.id}`, {})
+        .then(({ data }) => setCitas(data.citas));
+    }
+  }, [openCita, paciente]);
+
   useEffect(() => {
     const container = containerRef.current;
     const divider = dividerRef.current;
@@ -54,13 +65,13 @@ export default function PatientLayout() {
 
     let isDragging = false;
 
-    const handleMouseDown = (e) => {
+    const handleMouseDown = () => {
       isDragging = true;
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
     };
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (!isDragging) return;
       const containerRect = container.getBoundingClientRect();
       const newLeftPanelWidth =
@@ -110,7 +121,7 @@ export default function PatientLayout() {
           )}
 
           <Button
-            variant="default"
+            variant="outline"
             className="mb-4"
             onClick={() => {
               resetPaciente();
@@ -133,24 +144,30 @@ export default function PatientLayout() {
                 <CardTitle>{p.nombre}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>
-                  <strong>Cédula:</strong> {p.cedula}
-                </p>
-                <p>
-                  <strong>Edad:</strong> {calcularEdad(p.fechaNacimiento)}
-                </p>
-                <p>
-                  <strong>Genero:</strong> {p.genero}
-                </p>
-                <p>
-                  <strong>Estado Civil:</strong> {p.estadoCivil}
-                </p>
-                <p>
-                  <strong>Profesion:</strong> {p.profesion}
-                </p>
-                <p>
-                  <strong>Procedencia:</strong> {p.procedencia}
-                </p>
+                <div className="flex flex-row justify-between">
+                  <div className="flex flex-col">
+                    <p>
+                      <strong>Cédula:</strong> {p.cedula}
+                    </p>
+                    <p>
+                      <strong>Edad:</strong> {calcularEdad(p.fechaNacimiento)}
+                    </p>
+                    <p>
+                      <strong>Genero:</strong> {p.genero}
+                    </p>
+                  </div>
+                  <div className="flex flex-col">
+                    <p>
+                      <strong>Estado Civil:</strong> {p.estadoCivil}
+                    </p>
+                    <p>
+                      <strong>Profesion:</strong> {p.profesion}
+                    </p>
+                    <p>
+                      <strong>Procedencia:</strong> {p.procedencia}
+                    </p>
+                  </div>
+                </div>
               </CardContent>
               <CardFooter className="flex justify-between">
                 <Button variant="outline" onClick={() => setOpenPaciente(true)}>
@@ -215,9 +232,20 @@ export default function PatientLayout() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-bold mb-2">
-                  Historial de Consultas
-                </h2>
+                <div className="flex flex-row justify-start gap-3 my-3">
+                  <h2 className="text-2xl font-bold mb-2">
+                    Historial de Consultas
+                  </h2>
+                  <Button
+                    variant="default"
+                    onClick={() => {
+                      setCita(null);
+                      setOpenCita(true);
+                    }}
+                  >
+                    <PlusIcon className="mr-2 h-4 w-4" /> Nueva Consulta
+                  </Button>
+                </div>
                 <table className="w-full border-collapse border border-gray-300 bg-[#f8f8c7]">
                   <thead>
                     <tr>
@@ -247,8 +275,8 @@ export default function PatientLayout() {
                     </tr>
                   </thead>
                   <tbody>
-                    {paciente?.citas?.length > 0 &&
-                      paciente?.citas?.map((c, index) => (
+                    {citas.length > 0 &&
+                      citas.map((c, index) => (
                         <tr key={index}>
                           <td className="border border-gray-300 p-2">
                             {formatDate(c.fechaCita)}
