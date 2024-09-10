@@ -247,7 +247,7 @@ export default function PatientLayout() {
                   </Button>
                 </div>
                 <table className="w-full border-collapse border border-gray-300 bg-[#f7edc5]">
-                  <thead>
+                  <thead className="sticky top-0 z-10 bg-[#f7edc5]">
                     <tr>
                       <th className="border border-gray-300 p-2">Fecha</th>
                       <th className="border border-gray-300 p-2">
