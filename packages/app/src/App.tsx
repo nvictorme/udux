@@ -10,14 +10,18 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import {
-  CalendarPlus,
   FileEdit,
   LockIcon,
   PlusIcon,
   UnlockIcon,
+  UserIcon,
 } from "lucide-react";
 import { usePacientesStore } from "./store/pacientes.store";
 import { calcularEdad, formatDate } from "shared/src/helpers";
+import { DialogoPaciente } from "./paginas/pacientes/DialogoPaciente";
+import { DialogoAntecedentes } from "./paginas/antecedentes/DialogoAntecedentes";
+import { DialogoCita } from "./paginas/citas/DialogoCita";
+import { ICita } from "shared/src/interfaces";
 
 export default function PatientLayout() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,6 +29,12 @@ export default function PatientLayout() {
   const [leftPanelWidth, setLeftPanelWidth] = useState(30);
   const containerRef = useRef(null);
   const dividerRef = useRef(null);
+
+  const [openPaciente, setOpenPaciente] = useState(false);
+  const [openAnt, setOpenAnt] = useState(false);
+  const [openCita, setOpenCita] = useState(false);
+
+  const [cita, setCita] = useState<ICita | null>(null);
 
   const { pacientes, paciente, resetPaciente, listarPacientes } =
     usePacientesStore();
@@ -34,16 +44,6 @@ export default function PatientLayout() {
     setSearchTerm(value);
     if (!value) return usePacientesStore.setState({ pacientes: [] });
     listarPacientes({ cedula: value });
-  };
-
-  const handleNewAppointment = (patientId: number) => {
-    console.log(`Create new appointment for patient ${patientId}`);
-    // Implement appointment creation logic here
-  };
-
-  const handleEditMedicalHistory = (patientId: number) => {
-    console.log(`Edit medical history for patient ${patientId}`);
-    // Implement medical history editing logic here
   };
 
   useEffect(() => {
@@ -109,8 +109,15 @@ export default function PatientLayout() {
             </Button>
           )}
 
-          <Button variant="default" className="mb-4">
-            <PlusIcon className="mr-2 h-4 w-4" /> Crear
+          <Button
+            variant="default"
+            className="mb-4"
+            onClick={() => {
+              resetPaciente();
+              setOpenPaciente(true);
+            }}
+          >
+            <PlusIcon className="mr-2 h-4 w-4" /> Nuevo Paciente
           </Button>
         </div>
         <ScrollArea className="flex-grow">
@@ -146,19 +153,13 @@ export default function PatientLayout() {
                 </p>
               </CardContent>
               <CardFooter className="flex justify-between">
-                <Button
-                  variant="outline"
-                  onClick={() => handleNewAppointment(p.id)}
-                >
-                  <CalendarPlus className="mr-2 h-4 w-4" />
-                  New Appointment
+                <Button variant="outline" onClick={() => setOpenPaciente(true)}>
+                  <UserIcon className="mr-2 h-4 w-4" />
+                  Editar Paciente
                 </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => handleEditMedicalHistory(p.id)}
-                >
+                <Button variant="outline" onClick={() => setOpenAnt(true)}>
                   <FileEdit className="mr-2 h-4 w-4" />
-                  Edit Medical History
+                  Editar Antecedentes
                 </Button>
               </CardFooter>
             </Card>
@@ -182,7 +183,7 @@ export default function PatientLayout() {
                         Médicos
                       </td>
                       <td className="border border-gray-300 p-2">
-                        {paciente.antecedentes.medicos}
+                        {paciente?.antecedentes?.medicos}
                       </td>
                     </tr>
                     <tr>
@@ -190,7 +191,7 @@ export default function PatientLayout() {
                         Quirúrgicos
                       </td>
                       <td className="border border-gray-300 p-2">
-                        {paciente.antecedentes.quirurgicos}
+                        {paciente?.antecedentes?.quirurgicos}
                       </td>
                     </tr>
                     <tr>
@@ -198,7 +199,7 @@ export default function PatientLayout() {
                         Hábitos
                       </td>
                       <td className="border border-gray-300 p-2">
-                        {paciente.antecedentes.habitos}
+                        {paciente?.antecedentes?.habitos}
                       </td>
                     </tr>
                     <tr>
@@ -206,7 +207,7 @@ export default function PatientLayout() {
                         Actividad Física
                       </td>
                       <td className="border border-gray-300 p-2">
-                        {paciente.antecedentes.actividadFisica}
+                        {paciente?.antecedentes?.actividadFisica}
                       </td>
                     </tr>
                   </tbody>
@@ -246,37 +247,46 @@ export default function PatientLayout() {
                     </tr>
                   </thead>
                   <tbody>
-                    {paciente.citas.map((c, index) => (
-                      <tr key={index}>
-                        <td className="border border-gray-300 p-2">
-                          {formatDate(c.fechaCita)}
-                        </td>
-                        <td className="border border-gray-300 p-2">
-                          {c.motivoConsulta}
-                        </td>
-                        <td className="border border-gray-300 p-2">
-                          {c.procedimiento}
-                        </td>
-                        <td className="border border-gray-300 p-2">
-                          {c.enfermedadActual}
-                        </td>
-                        <td className="border border-gray-300 p-2">
-                          {c.examenClinico}
-                        </td>
-                        <td className="border border-gray-300 p-2">
-                          {c.impresionDiagnostica}
-                        </td>
-                        <td className="border border-gray-300 p-2">
-                          {c.tratamiento}
-                        </td>
-                        <td className="border border-gray-300 p-2">
-                          {c.observaciones}
-                        </td>
-                        <td className="border border-gray-300 p-2">
-                          <Button variant="link">Editar</Button>
-                        </td>
-                      </tr>
-                    ))}
+                    {paciente?.citas?.length > 0 &&
+                      paciente?.citas?.map((c, index) => (
+                        <tr key={index}>
+                          <td className="border border-gray-300 p-2">
+                            {formatDate(c.fechaCita)}
+                          </td>
+                          <td className="border border-gray-300 p-2">
+                            {c.motivoConsulta}
+                          </td>
+                          <td className="border border-gray-300 p-2">
+                            {c.procedimiento}
+                          </td>
+                          <td className="border border-gray-300 p-2">
+                            {c.enfermedadActual}
+                          </td>
+                          <td className="border border-gray-300 p-2">
+                            {c.examenClinico}
+                          </td>
+                          <td className="border border-gray-300 p-2">
+                            {c.impresionDiagnostica}
+                          </td>
+                          <td className="border border-gray-300 p-2">
+                            {c.tratamiento}
+                          </td>
+                          <td className="border border-gray-300 p-2">
+                            {c.observaciones}
+                          </td>
+                          <td className="border border-gray-300 p-2">
+                            <Button
+                              variant="link"
+                              onClick={() => {
+                                setCita(c);
+                                setOpenCita(true);
+                              }}
+                            >
+                              Editar
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
@@ -288,6 +298,26 @@ export default function PatientLayout() {
           </div>
         )}
       </div>
+      <DialogoPaciente
+        accion={paciente ? "Actualizar" : "Crear"}
+        paciente={paciente}
+        open={openPaciente}
+        onOpenChange={setOpenPaciente}
+      />
+      <DialogoAntecedentes
+        accion={paciente ? "Actualizar" : "Crear"}
+        paciente={paciente}
+        antecedentes={paciente?.antecedentes || null}
+        open={openAnt}
+        onOpenChange={setOpenAnt}
+      />
+      <DialogoCita
+        accion={paciente ? "Crear" : "Actualizar"}
+        paciente={paciente}
+        cita={cita}
+        open={openCita}
+        onOpenChange={setOpenCita}
+      />
     </div>
   );
 }

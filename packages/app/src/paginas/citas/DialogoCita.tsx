@@ -11,8 +11,8 @@ import { useCallback } from "react";
 
 interface DialogoCitaProps {
   accion: "Crear" | "Actualizar";
-  cita?: ICita;
-  paciente: IPaciente;
+  cita: ICita | null;
+  paciente: IPaciente | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
