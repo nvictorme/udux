@@ -137,7 +137,12 @@ export function FormularioCita({
             id="honorarios"
             type="number"
             className="col-span-3 text-xl"
-            {...register("honorarios", { required: false })}
+            {...register("honorarios", {
+              required: false,
+              pattern: /^[0-9]+$/,
+            })}
+            inputMode="numeric"
+            pattern="[0-9]*"
           />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
